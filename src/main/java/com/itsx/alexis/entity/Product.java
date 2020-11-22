@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class Product {
 
     @Id
+    @Column(name = "id_product")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int idProduct;
 
@@ -22,7 +23,9 @@ public class Product {
     @ManyToOne
     private Category category;
 
+    @Column(length = 50)
     private String name;
+
     private double price;
     private int amount;
 
