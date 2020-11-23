@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Getter
@@ -30,6 +31,10 @@ public class Administrator {
 
     @Column(name = "mother_last_name",length = 20)
     private String motherLastName;
+
+    @Email
+    @Column(length = 30)
+    private String eMail;
 
     @Column(length = 50)
     private String password;
