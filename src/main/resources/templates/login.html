@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>InventoryManagement</title>
+</head>
+<body>
+
+<form th:action="@{'/validate/admin'}" th:object="${loginUser}" method="post">
+    <label>Nombre de Usuario</label>
+    <input th:field="*{userName}" type="text" placeholder="nombre de usuario" required="required">
+    <br>
+    <label>Contraseña</label>
+    <input th:field="*{password}" type="password" placeholder="contraseña" required="required">
+    <button type="submit">Iniciar secion</button>
+</form>
+
+<form th:action="@{'/register/admin'}" method="get">
+    <button type="submit">Registrar admin</button>
+</form>
+
+</body>
+</html>

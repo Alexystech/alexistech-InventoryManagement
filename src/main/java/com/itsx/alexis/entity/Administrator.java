@@ -16,9 +16,8 @@ import javax.validation.constraints.Email;
 public class Administrator {
 
     @Id
-    @Column(name = "id_administrator")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int idAdministrator;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(name = "user_name",length = 40)
     private String userName;

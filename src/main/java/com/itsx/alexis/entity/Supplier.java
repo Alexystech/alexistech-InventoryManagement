@@ -16,7 +16,7 @@ public class Supplier {
 
     @Id
     @Column(name = "id_supplier")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSupplier;
 
     @Column(name = "name_supplier",length = 50)

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>InventoryManagement</title>
+</head>
+<body>
+
+<form th:action="@{'/validation/register'}" th:object="${administrator}" method="post">
+    <label th:for="id">id</label>
+    <input th:field="*{id}" type="text" required="required" disabled="disabled">
+    <br>
+    <label th:for="userName">Nombre de usuario</label>
+    <input th:field="*{userName}" type="text" placeholder="Nombre de usuario" required="required">
+    <br>
+    <label th:for="name">Nombre</label>
+    <input th:field="*{name}" type="text" placeholder="Nombre" required="required">
+    <br>
+    <label th:for="lastName">Apellido paterno</label>
+    <input th:field="*{lastName}" type="text" placeholder="Apellido paterno" required="required">
+    <br>
+    <label th:for="motherLastName">Apellido materno</label>
+    <input th:field="*{motherLastName}" type="text" placeholder="Apellido materno" required="required">
+    <br>
+    <label th:for="eMail">Correo</label>
+    <input th:field="*{EMail}" type="email" placeholder="example@gmail.com" required="required">
+    <br>
+    <label th:for="password">Contraseña</label>
+    <input th:field="*{password}" type="password" placeholder="" required="required">
+    <br>
+    <label th:for="cellPhone">Numero telefonico</label>
+    <input th:field="*{cellPhone}" type="text" placeholder="" required="required">
+    <br>
+    <button type="submit">REGISTRAR</button>
+</form>
+
+</body>
+</html>
