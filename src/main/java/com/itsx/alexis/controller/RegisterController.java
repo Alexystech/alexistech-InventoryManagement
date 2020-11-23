@@ -34,6 +34,6 @@ public class RegisterController {
         } else {
             return "redirect:/register/admin";
         }
-        return "redirect:/login";
+        return "redirect:/index";
     }
 }

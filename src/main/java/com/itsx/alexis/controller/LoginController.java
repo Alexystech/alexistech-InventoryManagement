@@ -17,12 +17,12 @@ public class LoginController {
     @Autowired
     AdministratorService administratorService;
 
-    @GetMapping("/login")
+    @GetMapping("/index")
     public String getLogin(Model model) {
         Login user = new Login();
 
         model.addAttribute("loginUser",user);
-        return "login";
+        return "index";
     }
 
     @PostMapping("/validate/admin")
@@ -32,7 +32,7 @@ public class LoginController {
         if (isValidateAdmin(administrators,loginUser)) {
             return "redirect:/admin/management/"+loginUser.getUserName()+"/"+loginUser.getPassword();
         } else {
-            return "redirect:/login";
+            return "redirect:/index";
         }
     }
 
