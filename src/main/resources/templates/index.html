@@ -3,21 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>InventoryManagement</title>
+    <link rel="stylesheet" href="/static/style/login.css"
+            th:href="@{/style/login.css}">
+    <link rel="stylesheet" href="/static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="/static/css/bootstrap-grid.css"
+          th:href="@{/css/bootstrap-grid.css}">
+    <link rel="stylesheet" href="/static/css/bootstrap-reboot.css"
+          th:href="@{/css/bootstrap-reboot.css}">
+    <link rel="script" href="/static/js/bootstrap.js"
+          th:href="@{/js/bootstrap.js}">
+    <link rel="script" href="/static/js/bootstrap.bundle.js"
+          th:href="@{/js/bootstrap.bundle.js}">
 </head>
 <body>
 
-<form th:action="@{'/validate/admin'}" th:object="${loginUser}" method="post">
-    <label>Nombre de Usuario</label>
-    <input th:field="*{userName}" type="text" placeholder="nombre de usuario" required="required">
-    <br>
-    <label>Contraseña</label>
-    <input th:field="*{password}" type="password" placeholder="contraseña" required="required">
-    <button type="submit">Iniciar secion</button>
-</form>
+<nav class="navbar navbar-dark bg-dark">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" href="#"><h2 class="text-light bg-dark" style="font-size: 20px">Abarrotes viviana</h2></a>
+        </li>
+    </ul>
+    <a th:href="@{'/index'}" align="right"><h2 class="text-muted" style="font-size: 18px">Home</h2></a>
+</nav>
 
-<form th:action="@{'/register/admin'}" method="get">
-    <button type="submit">Registrar admin</button>
-</form>
+<div class="loginbox">
+    <img src="/static/img/admin.png"
+         th:src="@{/img/admin.png}" th:alt="logoUser" class="avatar">
+
+    <h1>Administrador</h1>
+
+    <form th:action="@{'/validate/admin'}" th:object="${loginUser}" method="post">
+        <label>Nombre de Usuario</label>
+        <input th:field="*{userName}" type="text" placeholder="nombre de usuario" required="required">
+        <br>
+        <label>Contraseña</label>
+        <input th:field="*{password}" type="password" placeholder="contraseña" required="required">
+        <br>
+        <button type="submit">Iniciar secion</button>
+    </form>
+
+    <form th:action="@{'/register/admin'}" method="get">
+        <button type="submit">Registrar admin</button>
+    </form>
+</div>
 
 </body>
 </html>

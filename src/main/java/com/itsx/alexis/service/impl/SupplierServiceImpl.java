@@ -13,7 +13,7 @@ import java.util.Optional;
 public class SupplierServiceImpl implements SupplierService {
 
     @Autowired
-    SupplierRepository supplierRepository;
+    private SupplierRepository supplierRepository;
 
     @Override
     public void createSupplier(Supplier supplier) {

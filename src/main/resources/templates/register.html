@@ -2,36 +2,63 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/bootstrap.css"
+        th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="/static/css/bootstrap-grid.css"
+        th:href="@{/css/bootstrap-grid.css}">
+    <link rel="stylesheet" href="/static/css/bootstrap-reboot.css"
+        th:href="@{/css/bootstrap-reboot.css}">
+    <link rel="script" href="/static/js/bootstrap.js"
+        th:href="@{/js/bootstrap.js}">
+    <link rel="script" href="/static/js/bootstrap.bundle.js"
+        th:href="@{/js/bootstrap.bundle.js}">
     <title>InventoryManagement</title>
 </head>
 <body>
 
+<nav class="navbar navbar-dark bg-dark">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" href="#"><h2 class="text-light bg-dark" style="font-size: 20px">Abarrotes viviana</h2></a>
+        </li>
+    </ul>
+    <a th:href="@{'/index'}" align="right"><h2 class="text-muted" style="font-size: 18px">Home</h2></a>
+</nav>
+
 <form th:action="@{'/validation/register'}" th:object="${administrator}" method="post">
-    <label th:for="id">id</label>
-    <input th:field="*{id}" type="text" required="required" disabled="disabled">
-    <br>
-    <label th:for="userName">Nombre de usuario</label>
-    <input th:field="*{userName}" type="text" placeholder="Nombre de usuario" required="required">
-    <br>
-    <label th:for="name">Nombre</label>
-    <input th:field="*{name}" type="text" placeholder="Nombre" required="required">
-    <br>
-    <label th:for="lastName">Apellido paterno</label>
-    <input th:field="*{lastName}" type="text" placeholder="Apellido paterno" required="required">
-    <br>
-    <label th:for="motherLastName">Apellido materno</label>
-    <input th:field="*{motherLastName}" type="text" placeholder="Apellido materno" required="required">
-    <br>
-    <label th:for="eMail">Correo</label>
-    <input th:field="*{EMail}" type="email" placeholder="example@gmail.com" required="required">
-    <br>
-    <label th:for="password">Contraseña</label>
-    <input th:field="*{password}" type="password" placeholder="" required="required">
-    <br>
-    <label th:for="cellPhone">Numero telefonico</label>
-    <input th:field="*{cellPhone}" type="text" placeholder="" required="required">
-    <br>
-    <button type="submit">REGISTRAR</button>
+    <div class="form-group">
+        <label th:for="id">id</label>
+        <input th:field="*{id}" class="form-control" type="text" required="required" disabled="disabled">
+    </div>
+    <div class="form-group">
+        <label th:for="userName">Nombre de usuario</label>
+        <input th:field="*{userName}" class="form-control" type="text" placeholder="Nombre de usuario" required="required">
+    </div>
+    <div class="form-group">
+        <label th:for="name">Nombre</label>
+        <input th:field="*{name}" class="form-control" type="text" placeholder="Nombre" required="required">
+    </div>
+    <div class="form-group">
+        <label th:for="lastName">Apellido paterno</label>
+        <input th:field="*{lastName}" class="form-control" type="text" placeholder="Apellido paterno" required="required">
+    </div>
+    <div class="form-group">
+        <label th:for="motherLastName">Apellido materno</label>
+        <input th:field="*{motherLastName}" class="form-control" type="text" placeholder="Apellido materno" required="required">
+    </div>
+    <div class="form-group">
+        <label th:for="eMail">Correo</label>
+        <input th:field="*{EMail}" class="form-control" type="email" placeholder="example@gmail.com" required="required">
+    </div>
+    <div class="form-group">
+        <label th:for="password">Contraseña</label>
+        <input th:field="*{password}" class="form-control" type="password" placeholder="" required="required">
+    </div>
+    <div class="form-group">
+        <label th:for="cellPhone">Numero telefonico</label>
+        <input th:field="*{cellPhone}" class="form-control" type="text" placeholder="" required="required">
+    </div>
+    <button type="submit" class="btn btn-primary">REGISTRAR</button>
 </form>
 
 </body>

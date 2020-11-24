@@ -13,7 +13,7 @@ import java.util.Optional;
 public class AdministratorServiceImpl implements AdministratorService {
 
     @Autowired
-    AdministratorRepository administratorRepository;
+    private AdministratorRepository administratorRepository;
 
     @Override
     public void createAdministrator(Administrator administrator) {
