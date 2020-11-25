@@ -88,7 +88,7 @@
             <!--id-->
             <div class="form-group">
                 <label for="idProduct">ID Producto</label>
-                <input th:field="*{idProduct}" type="text" class="form-control" id="idProduct"
+                <input th:field="*{idProduct}" type="number" class="form-control" id="idProduct"
                     required="required" disabled="disabled">
             </div>
             <!--category-->
@@ -96,10 +96,10 @@
                 <div class="input-group-append">
                     <label class="custom-select" for="inputGroupSelect01">Categoria</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect01" required="required">
-                    <option selected></option>
+                <select th:field="*{category}" class="custom-select" id="inputGroupSelect01" required="required">
+                    <option selected value=""></option>
                     <div th:each="categoryItem : ${categories}">
-                        <option th:value="${categoryItem}"
+                        <option th:value="${categoryItem.idCategory}"
                             th:text="${categoryItem.getNameCategory()}"></option>
                     </div>
                 </select>
@@ -138,10 +138,10 @@
                 <div class="input-group-append">
                     <label class="custom-select" for="inputGroupSelect02">Proveedor</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect02" required="required">
-                    <option selected></option>
+                <select th:field="*{supplier}" class="custom-select" id="inputGroupSelect02" required="required">
+                    <option selected value=""></option>
                     <div th:each="supplierItem : ${suppliers}">
-                        <option th:value="${supplierItem}"
+                        <option th:value="${supplierItem.idSupplier}"
                                 th:text="${supplierItem.getNameSupplier()}"></option>
                     </div>
                 </select>
@@ -157,7 +157,7 @@
             <!--idCategory-->
             <div class="form-group">
                 <label for="idCategory">ID Categoria</label>
-                <input th:field="*{idCategory}" type="text" class="form-control" id="idCategory" required="required"
+                <input th:field="*{idCategory}" type="number" class="form-control" id="idCategory" required="required"
                     disabled="disabled">
             </div>
 
@@ -178,12 +178,12 @@
             <!--idSupplier-->
             <div class="form-group">
                 <label for="idSupplier">ID Proveedor</label>
-                <input th:field="*{idSupplier}" type="text" class="form-control" id="idSupplier" required="required"
+                <input th:field="*{idSupplier}" type="number" class="form-control" id="idSupplier" required="required"
                     disabled="disabled">
             </div>
             
             <!--name supplier-->
-            <div>
+            <div class="form-group">
                 <label for="nameSupplier">Nombre del proveedor</label>
                 <input th:field="*{nameSupplier}" type="text" class="form-control" id="nameSupplier" required="required"
                     placeholder="ingresa nombre del proveedor">

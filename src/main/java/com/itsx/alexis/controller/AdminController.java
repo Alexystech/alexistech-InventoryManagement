@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -31,9 +32,14 @@ public class AdminController {
     @Autowired
     private SupplierService supplierService;
 
+    private String userName;
+    private String password;
+
     @GetMapping("/admin/management/{userName}/{password}")
     public String postRegister(@PathVariable("userName") String userName,@PathVariable("password") String password, Model model) {
 
+        this.userName = userName;
+        this.password = password;
         Product product;
         Category category;
         Supplier supplier;
@@ -56,7 +62,23 @@ public class AdminController {
         return "management";
     }
 
+    @PostMapping("/auth/save/product")
+    public String saveProduct(Product product) {
+        productService.createProduct(product);
+        return "redirect:/admin/management/"+this.userName+"/"+this.password;
+    }
 
+    @PostMapping("/auth/save/category")
+    private String saveCategory(Category category) {
+        categoryService.createCategory(category);
+        return "redirect:/admin/management/"+this.userName+"/"+this.password;
+    }
+
+    @PostMapping("/auth/save/supplier")
+    public String saveSupplier(Supplier supplier) {
+        supplierService.createSupplier(supplier);
+        return "redirect:/admin/management/"+this.userName+"/"+this.password;
+    }
 
     public Administrator getAdministrator(List<Administrator> administrators, String userName) {
         Administrator aux = null;
