@@ -8,6 +8,7 @@ import com.itsx.alexis.service.AdministratorService;
 import com.itsx.alexis.service.CategoryService;
 import com.itsx.alexis.service.ProductService;
 import com.itsx.alexis.service.SupplierService;
+import com.itsx.alexis.utility.CategoryUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AdminController {
@@ -36,7 +38,7 @@ public class AdminController {
     private String password;
 
     @GetMapping("/admin/management/{userName}/{password}")
-    public String postRegister(@PathVariable("userName") String userName,@PathVariable("password") String password, Model model) {
+    public String getRegister(@PathVariable("userName") String userName,@PathVariable("password") String password, Model model) {
 
         this.userName = userName;
         this.password = password;
@@ -78,6 +80,34 @@ public class AdminController {
     public String saveSupplier(Supplier supplier) {
         supplierService.createSupplier(supplier);
         return "redirect:/admin/management/"+this.userName+"/"+this.password;
+    }
+
+    @GetMapping("/management/stock")
+    public String getStockViewer(Model model) {
+        List<Category> categories = categoryService.findAll();
+
+        model.addAttribute("categories",categories);
+        model.addAttribute("categoryUtility",new CategoryUtility());
+
+        return "stockviewer";
+    }
+
+    @PostMapping("/management/stock/by/category")
+    public String postStockViewer(CategoryUtility categoryUtility, Model model) {
+
+        List<Category> categories = categoryService.findAll();
+        Optional<Category> category = categoryService.findById(categoryUtility.getId());
+
+        model.addAttribute("categoryUtility",new CategoryUtility());
+        model.addAttribute("categorySelected",category.get()); //filtrar productos por categorias
+        model.addAttribute("categories",categories);
+
+        return "stockviewer";
+    }
+
+    @GetMapping("/switch/admin")
+    public String getSwitch() {
+        return "redirect:/admin/management/"+userName+"/"+password;
     }
 
     public Administrator getAdministrator(List<Administrator> administrators, String userName) {
