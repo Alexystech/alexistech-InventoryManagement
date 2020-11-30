@@ -49,10 +49,35 @@
     <button type="submit" class="btn btn-info">Consultar productos</button>
 </form>
 
+<br>
 <!--Tabla de productos por categorias-->
-<div>
+<div th:if="${filteredProducts}">
     <table class="table table-hover table-dark">
-
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Existencia</th>
+            <th scope="col">Proveedor</th>
+            <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody th:each="product : ${filteredProducts}">
+        <tr>
+            <th scope="row" th:text="${product.getIdProduct()}"></th>
+            <td th:text="${product.getName()}"></td>
+            <td th:text="${product.getCategory().getNameCategory()}"></td>
+            <td th:text="${product.getPrice()}"></td>
+            <td th:text="${product.getAmount()}"></td>
+            <td th:text="${product.getSupplier().getNameSupplier()}"></td>
+            <td>
+                <button type="button" class="btn btn-warning">Actualizar</button>
+                <button type="button" class="btn btn-danger">Eliminar</button>
+            </td>
+        </tr>
+        </tbody>
     </table>
 </div>
 
