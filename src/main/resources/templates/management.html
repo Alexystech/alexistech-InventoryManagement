@@ -54,7 +54,7 @@
 
     <!--profile-->
     <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab" th:object="${administrator}">
-        <div class="card mb-3" style="max-width: 540px;">
+        <div class="card mb-3" style="max-width: 650px;">
             <div class="row no-gutters">
                 <div class="col-md-4">
                     <img src="/static/img/admin.png"
@@ -77,6 +77,8 @@
                         <p class="card-text" th:text="*{cellPhone}"></p>
 
                         <a th:href="@{'/management/stock'}" class="btn btn-primary">Stock Viewer</a>
+                        <a th:href="@{'/management/categories'}" class="btn btn-primary">Categorias</a>
+                        <a th:href="@{'/management/suppliers'}" class="btn btn-primary">Proveedores</a>
                     </div>
                 </div>
             </div>
@@ -120,7 +122,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
-                    <input th:field="*{price}" type="number" class="form-control"
+                    <input th:field="*{price}" type="text" class="form-control"
                            aria-label="Amount (to the nearest dollar)" id="price" required="required">
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>

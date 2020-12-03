@@ -12,6 +12,7 @@ import com.itsx.alexis.utility.CategoryUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,19 +67,19 @@ public class AdminController {
     }
 
     @PostMapping("/auth/save/product")
-    public String saveProduct(Product product) {
+    public String saveProduct(@Validated Product product) {
         productService.createProduct(product);
         return "redirect:/admin/management/"+this.userName+"/"+this.password;
     }
 
     @PostMapping("/auth/save/category")
-    private String saveCategory(Category category) {
+    private String saveCategory(@Validated Category category) {
         categoryService.createCategory(category);
         return "redirect:/admin/management/"+this.userName+"/"+this.password;
     }
 
     @PostMapping("/auth/save/supplier")
-    public String saveSupplier(Supplier supplier) {
+    public String saveSupplier(@Validated Supplier supplier) {
         supplierService.createSupplier(supplier);
         return "redirect:/admin/management/"+this.userName+"/"+this.password;
     }
@@ -116,6 +117,27 @@ public class AdminController {
     @GetMapping("/switch/admin")
     public String getSwitch() {
         return "redirect:/admin/management/"+userName+"/"+password;
+    }
+
+    @GetMapping("/product/update/{idProduct}")
+    public String getUpdate(@PathVariable int idProduct,Model model) {
+        Optional<Product>product = productService.findById(idProduct);
+        model.addAttribute("categories",categoryService.findAll());
+        model.addAttribute("suppliers",supplierService.findAll());
+        model.addAttribute("product",product.get());
+        return "updateFormProduct";
+    }
+
+    @PostMapping("/auth/update/product")
+    public String postUpdateProduct(@Validated Product product) {
+        productService.createProduct(product);
+        return "redirect:/management/stock";
+    }
+
+    @GetMapping("/product/delete/{idProduct}")
+    public String deleteProduct(@PathVariable int idProduct) {
+        productService.removeProduct(idProduct);
+        return "redirect:/management/stock";
     }
 
     private List<Product>filteredProducts(int id) {

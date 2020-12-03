@@ -73,8 +73,8 @@
             <td th:text="${product.getAmount()}"></td>
             <td th:text="${product.getSupplier().getNameSupplier()}"></td>
             <td>
-                <button type="button" class="btn btn-warning">Actualizar</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <a th:href="@{/product/update/}+${product.getIdProduct()}" class="btn btn-warning">Actualizar</a>
+                <a th:href="@{/product/delete/}+${product.getIdProduct()}" class="btn btn-danger">Eliminar</a>
             </td>
         </tr>
         </tbody>

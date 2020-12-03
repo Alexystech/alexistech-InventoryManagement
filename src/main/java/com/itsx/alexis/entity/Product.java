@@ -19,7 +19,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProduct;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "fk_id_category", referencedColumnName = "id_category",nullable = false)
     private Category category;
 
@@ -29,7 +29,7 @@ public class Product {
     private double price;
     private int amount;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "fk_id_supplier", referencedColumnName = "id_supplier",nullable = false)
     private Supplier supplier;
 }

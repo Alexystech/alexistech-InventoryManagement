@@ -9,7 +9,7 @@ body {
 
 .loginbox {
     width: 320px;
-    height: 420px;
+    height: 460px;
     background: #000;
     color: #fff;
     top: 50%;
@@ -61,14 +61,14 @@ h1 {
     border: none;
     outline: none;
     height: 40px;
-    background: #fb2525;
+    background: #257ffb;
     color: #fff;
     font-size: 18px;
-    border-radius: 20px;
+
 }
 
 .loginbox button[type="submit"]:hover{
     cursor: pointer;
-    background: #ffc107;
+    background: #ffffff;
     color: #000;
 }
