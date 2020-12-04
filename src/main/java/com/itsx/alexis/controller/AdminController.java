@@ -140,6 +140,52 @@ public class AdminController {
         return "redirect:/management/stock";
     }
 
+    @GetMapping("/management/categories")
+    public String getCategories(Model model) {
+        model.addAttribute("categories",categoryService.findAll());
+//        model.addAttribute("haveAnyProduct",haveAnyProduct); queda pendiente
+        return "categoriesviewer";
+    }
+
+    @GetMapping("/category/update/{idCategory}")
+    public String getUpdateCategory(@PathVariable int idCategory,Model model) {
+        Optional<Category>category = categoryService.findById(idCategory);
+        model.addAttribute("category",category.get());
+        return "updateFormCategory";
+    }
+
+    @PostMapping("/auth/update/category")
+    public String postUpdateCategory(@Validated Category category) {
+        categoryService.createCategory(category);
+        return "redirect:/management/categories";
+    }
+
+    @GetMapping("/category/delete/{idCategory}")
+    public String deleteCategory(@PathVariable int idCategory) {
+        categoryService.deleteCategory(idCategory);
+        return "redirect:/management/categories";
+    }
+
+    /**
+     * este endpoint aun queda pendiente
+     * */
+    @GetMapping("/management/suppliers")
+    public String getSuppliers() {
+        return "";
+    }
+
+    /**
+     * Queda pendiente recuerda que la clave para resolverlo puede ser crear una clase para esto
+     * */
+    private boolean haveAnyProduct(int idCategory) {
+        List<Product>products = filteredProducts(idCategory);
+        if (products.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private List<Product>filteredProducts(int id) {
         List<Product>list = new LinkedList<>();
         List<Product>products = productService.findAll();

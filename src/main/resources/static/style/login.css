@@ -10,7 +10,7 @@ body {
 .loginbox {
     width: 320px;
     height: 460px;
-    background: #000;
+    background: #000000;
     color: #fff;
     top: 50%;
     left: 50%;
@@ -61,7 +61,7 @@ h1 {
     border: none;
     outline: none;
     height: 40px;
-    background: #257ffb;
+    background: #257;
     color: #fff;
     font-size: 18px;
 
@@ -69,6 +69,6 @@ h1 {
 
 .loginbox button[type="submit"]:hover{
     cursor: pointer;
-    background: #ffffff;
+    background: #fff;
     color: #000;
 }

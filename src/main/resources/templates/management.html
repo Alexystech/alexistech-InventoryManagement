@@ -76,9 +76,12 @@
                         <p class="card-subtitle">Telefono</p>
                         <p class="card-text" th:text="*{cellPhone}"></p>
 
-                        <a th:href="@{'/management/stock'}" class="btn btn-primary">Stock Viewer</a>
-                        <a th:href="@{'/management/categories'}" class="btn btn-primary">Categorias</a>
-                        <a th:href="@{'/management/suppliers'}" class="btn btn-primary">Proveedores</a>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a th:href="@{'/management/stock'}" class="btn btn-primary">Stock Viewer</a>
+                            <a th:href="@{'/management/categories'}" class="btn btn-primary">Categorias</a>
+                            <a th:href="@{'/management/suppliers'}" class="btn btn-primary">Proveedores</a>
+                        </div>
+
                     </div>
                 </div>
             </div>
