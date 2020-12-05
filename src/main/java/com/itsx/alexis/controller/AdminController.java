@@ -140,10 +140,15 @@ public class AdminController {
         return "redirect:/management/stock";
     }
 
+    /**
+     *  Categorias endpoints
+     * @param model
+     * @return
+     */
     @GetMapping("/management/categories")
     public String getCategories(Model model) {
         model.addAttribute("categories",categoryService.findAll());
-//        model.addAttribute("haveAnyProduct",haveAnyProduct); queda pendiente
+        model.addAttribute("haveAnyProduct",haveAnyProduct());
         return "categoriesviewer";
     }
 
@@ -170,15 +175,36 @@ public class AdminController {
      * este endpoint aun queda pendiente
      * */
     @GetMapping("/management/suppliers")
-    public String getSuppliers() {
-        return "";
+    public String getSuppliers(Model model) {
+        model.addAttribute("suppliers",supplierService.findAll());
+        model.addAttribute("haveAnyProduct",haveAnyProduct());
+        return "supplierviewer";
+    }
+
+    @GetMapping("/supplier/update/{idSupplier}")
+    public String getSupplier(@PathVariable int idSupplier,Model model) {
+        Optional<Supplier> supplier = supplierService.findById(idSupplier);
+        model.addAttribute("supplier",supplier.get());
+        return "updateFormSupplier";
+    }
+
+    @PostMapping("/auth/update/supplier")
+    public String postUpdateSupplier(@Validated Supplier supplier) {
+        supplierService.createSupplier(supplier);
+        return "redirect:/management/suppliers";
+    }
+
+    @GetMapping("/supplier/delete/{idSupplier}")
+    public String deleteSupplier(@PathVariable int idSupplier) {
+        supplierService.removeSupplier(idSupplier);
+        return "redirect:/management/suppliers";
     }
 
     /**
      * Queda pendiente recuerda que la clave para resolverlo puede ser crear una clase para esto
      * */
-    private boolean haveAnyProduct(int idCategory) {
-        List<Product>products = filteredProducts(idCategory);
+    private boolean haveAnyProduct() {
+        List<Product>products = productService.findAll();
         if (products.isEmpty()) {
             return false;
         } else {

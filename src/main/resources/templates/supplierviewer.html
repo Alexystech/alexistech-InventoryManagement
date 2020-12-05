@@ -25,25 +25,33 @@
             <a class="nav-link" href="#"><h2 class="text-light bg-dark" style="font-size: 20px">Abarrotes viviana</h2></a>
         </li>
     </ul>
-    <a th:href="@{'/management/categories'}" align="right"><h2 class="text-muted" style="font-size: 18px">Regresar</h2></a>
+    <a th:href="@{'/switch/admin'}" align="right"><h2 class="text-muted" style="font-size: 18px">Regresar</h2></a>
 </nav>
 
-<form th:action="@{'/auth/update/category'}" th:object="${category}" method="post">
-    <!--idCategory-->
-    <div class="form-group">
-        <label for="idCategory">ID Categoria</label>
-        <input th:field="*{idCategory}" type="number" class="form-control" id="idCategory" required="required">
-    </div>
+<p class="h1">Mis Proveedores
+    <small class="text-muted">Administre los proveedores registrados</small>
+</p>
 
-    <!--nameCategory-->
-    <div class="form-group">
-        <label for="nameCategory">Nombre de Categoria</label>
-        <input th:field="*{nameCategory}" type="text" class="form-control" id="nameCategory" required="required"
-               placeholder="Ingresa nombre de categoria">
-    </div>
-
-    <button class="btn btn-success">Actualizar categoria</button>
-</form>
+<table class="table table-hover table-dark">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Acciones</th>
+    </tr>
+    </thead>
+    <tbody th:each="supplier : ${suppliers}">
+    <tr>
+        <th scope="row" th:text="${supplier.getIdSupplier()}"></th>
+        <td th:text="${supplier.getNameSupplier()}"></td>
+        <td>
+            <!--queda pendiente la clave para resolverlo puede ser crear una clase para mandarlo al front-->
+            <a th:href="@{/supplier/update/}+${supplier.getIdSupplier()}" class="btn btn-warning">Actualizar</a>
+            <a th:if="${!haveAnyProduct}" th:href="@{/supplier/delete/}+${supplier.getIdSupplier()}" class="btn btn-danger">Eliminar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

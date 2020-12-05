@@ -25,24 +25,26 @@
             <a class="nav-link" href="#"><h2 class="text-light bg-dark" style="font-size: 20px">Abarrotes viviana</h2></a>
         </li>
     </ul>
-    <a th:href="@{'/management/categories'}" align="right"><h2 class="text-muted" style="font-size: 18px">Regresar</h2></a>
+    <a th:href="@{'/management/suppliers'}" align="right"><h2 class="text-muted" style="font-size: 18px">Regresar</h2></a>
 </nav>
 
-<form th:action="@{'/auth/update/category'}" th:object="${category}" method="post">
-    <!--idCategory-->
+
+
+<form th:action="@{'/auth/update/supplier'}" th:object="${supplier}" method="post">
+    <!--idSupplier-->
     <div class="form-group">
-        <label for="idCategory">ID Categoria</label>
-        <input th:field="*{idCategory}" type="number" class="form-control" id="idCategory" required="required">
+        <label for="idSupplier">ID Proveedor</label>
+        <input th:field="*{idSupplier}" type="number" class="form-control" id="idSupplier" required="required">
     </div>
 
-    <!--nameCategory-->
+    <!--name supplier-->
     <div class="form-group">
-        <label for="nameCategory">Nombre de Categoria</label>
-        <input th:field="*{nameCategory}" type="text" class="form-control" id="nameCategory" required="required"
-               placeholder="Ingresa nombre de categoria">
+        <label for="nameSupplier">Nombre del proveedor</label>
+        <input th:field="*{nameSupplier}" type="text" class="form-control" id="nameSupplier" required="required"
+               placeholder="ingresa nombre del proveedor">
     </div>
 
-    <button class="btn btn-success">Actualizar categoria</button>
+    <button class="btn btn-success">Actualizar proveedor</button>
 </form>
 
 </body>
