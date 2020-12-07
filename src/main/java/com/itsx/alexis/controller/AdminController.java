@@ -9,6 +9,7 @@ import com.itsx.alexis.service.CategoryService;
 import com.itsx.alexis.service.ProductService;
 import com.itsx.alexis.service.SupplierService;
 import com.itsx.alexis.utility.CategoryUtility;
+import com.itsx.alexis.utility.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -148,7 +149,8 @@ public class AdminController {
     @GetMapping("/management/categories")
     public String getCategories(Model model) {
         model.addAttribute("categories",categoryService.findAll());
-        model.addAttribute("haveAnyProduct",haveAnyProduct());
+        model.addAttribute("products",productService.findAll());
+        model.addAttribute("validation", new Validation());
         return "categoriesviewer";
     }
 
@@ -177,7 +179,8 @@ public class AdminController {
     @GetMapping("/management/suppliers")
     public String getSuppliers(Model model) {
         model.addAttribute("suppliers",supplierService.findAll());
-        model.addAttribute("haveAnyProduct",haveAnyProduct());
+        model.addAttribute("products",productService.findAll());
+        model.addAttribute("validation",new Validation());
         return "supplierviewer";
     }
 

@@ -47,7 +47,7 @@
         <td>
             <!--queda pendiente la clave para resolverlo puede ser crear una clase para mandarlo al front-->
             <a th:href="@{/supplier/update/}+${supplier.getIdSupplier()}" class="btn btn-warning">Actualizar</a>
-            <a th:if="${!haveAnyProduct}" th:href="@{/supplier/delete/}+${supplier.getIdSupplier()}" class="btn btn-danger">Eliminar</a>
+            <a th:if="${!validation.haveAnyProductBySupplier(products,supplier)}" th:href="@{/supplier/delete/}+${supplier.getIdSupplier()}" class="btn btn-danger">Eliminar</a>
         </td>
     </tr>
     </tbody>
