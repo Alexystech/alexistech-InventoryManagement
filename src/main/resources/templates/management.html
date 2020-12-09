@@ -59,13 +59,12 @@
     <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab" th:object="${administrator}">
 
 <!--        card del perfil de administrador-->
-        <div class="card mb-3" style="max-width: 650px;">
-            <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="/static/img/admin.png"
-                         th:src="@{/img/admin.png}" th:alt="logoUser" class="card-img">
-                </div>
-                <div class="col-md-8">
+        <div class="d-inline-flex">
+
+
+        <div class="card" style="max-width: 18rem">
+                <img src="/static/img/admin.png"
+                     th:src="@{/img/admin.png}" th:alt="logoUser" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">Bienvenido
                             <span th:text="*{name}"> </span>
@@ -86,10 +85,7 @@
                             <a th:href="@{'/management/categories'}" class="btn btn-primary">Categorias</a>
                             <a th:href="@{'/management/suppliers'}" class="btn btn-primary">Proveedores</a>
                         </div>
-
                     </div>
-                </div>
-            </div>
         </div>
 
 <!--        grafica ToDo-->
@@ -100,7 +96,7 @@
         <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
         <figure class="highcharts-figure">
-            <div id="container"></div>
+            <div id="containerJSGraph"></div>
             <p class="highcharts-description">
                 Highcharts has extensive support for time series, and will adapt
                 intelligently to the input data. Click and drag in the chart to zoom in
@@ -108,11 +104,13 @@
             </p>
         </figure>
 
+        </div>
+
         <script th:inline="javascript">
             $(function () {
-                Highcharts.chart('container', {
+                Highcharts.chart('containerJSGraph', {
                     title: {
-                        text: 'Combination chart'
+                        text: 'ToDo Grafica'
                     },
                     xAxis: {
                         categories: ['Productos', 'Categorias', 'Proveedores']
