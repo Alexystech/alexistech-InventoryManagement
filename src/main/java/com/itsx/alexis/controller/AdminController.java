@@ -40,6 +40,15 @@ public class AdminController {
     private String userName;
     private String password;
 
+    /**
+     *Este endpoint mostrara el dashboard del administrador
+     * desde este punto se tiene acceso a todas las acciones
+     * disponibles de la aplicacion.
+     * @param userName
+     * @param password
+     * @param model
+     * @return
+     */
     @GetMapping("/admin/management/{userName}/{password}")
     public String getRegister(@PathVariable("userName") String userName,@PathVariable("password") String password, Model model) {
 
@@ -67,24 +76,46 @@ public class AdminController {
         return "management";
     }
 
+    /**
+     * Endpoint donde se almacena en la base de datos el producto.
+     * @param product
+     * @return
+     */
     @PostMapping("/auth/save/product")
     public String saveProduct(@Validated Product product) {
         productService.createProduct(product);
         return "redirect:/admin/management/"+this.userName+"/"+this.password;
     }
 
+    /**
+     * Endpoint donde se almacena en la base de datos la categoria.
+     * @param category
+     * @return
+     */
     @PostMapping("/auth/save/category")
     private String saveCategory(@Validated Category category) {
         categoryService.createCategory(category);
         return "redirect:/admin/management/"+this.userName+"/"+this.password;
     }
 
+    /**
+     * Endpoint donde se almacena en la base de datos en proveedor.
+     * @param supplier
+     * @return
+     */
     @PostMapping("/auth/save/supplier")
     public String saveSupplier(@Validated Supplier supplier) {
         supplierService.createSupplier(supplier);
         return "redirect:/admin/management/"+this.userName+"/"+this.password;
     }
 
+    //Endpoints administrativos
+
+    /**
+     *
+     * @param model
+     * @return
+     */
     @GetMapping("/management/stock")
     public String getStockViewer(Model model) {
         List<Category> categories = categoryService.findAll();
@@ -173,9 +204,6 @@ public class AdminController {
         return "redirect:/management/categories";
     }
 
-    /**
-     * este endpoint aun queda pendiente
-     * */
     @GetMapping("/management/suppliers")
     public String getSuppliers(Model model) {
         model.addAttribute("suppliers",supplierService.findAll());

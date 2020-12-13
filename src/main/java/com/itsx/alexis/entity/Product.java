@@ -32,4 +32,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "fk_id_supplier", referencedColumnName = "id_supplier",nullable = false)
     private Supplier supplier;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Administrator administrator;
 }

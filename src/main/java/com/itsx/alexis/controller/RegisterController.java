@@ -15,6 +15,11 @@ public class RegisterController {
     @Autowired
     AdministratorService administratorService;
 
+    /**
+     * Endpoint que muestra el formulario de registro
+     * @param model
+     * @return
+     */
     @GetMapping("/register/admin")
     public String getRegister(Model model) {
         Administrator administrator;
@@ -24,6 +29,17 @@ public class RegisterController {
         return "register";
     }
 
+    /**
+     * Endpoint para validar el registro
+     *
+     * Si el metodo {@methot isValidateRegister} valida
+     * correctamente el registro se redirecciona al
+     * endpoint {@code /index} de lo contrario la redireccion es
+     * al endpoint {@code /validation/register}.
+     * @param administrator
+     * @param model
+     * @return
+     */
     @PostMapping("/validation/register")
     public String validateRegister(Administrator administrator, Model model) {
         Register utilityRegister = new Register();
