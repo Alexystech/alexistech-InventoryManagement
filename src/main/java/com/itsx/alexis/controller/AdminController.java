@@ -39,6 +39,7 @@ public class AdminController {
 
     private String userName;
     private String password;
+    private int idAdmin;
 
     /**
      *Este endpoint mostrara el dashboard del administrador
@@ -54,6 +55,7 @@ public class AdminController {
 
         this.userName = userName;
         this.password = password;
+        this.idAdmin = getAdministrator(administratorService.findAll(), userName).getId();
         Product product;
         Category category;
         Supplier supplier;
@@ -83,6 +85,7 @@ public class AdminController {
      */
     @PostMapping("/auth/save/product")
     public String saveProduct(@Validated Product product) {
+        product.setAdministrator(administratorService.findById(idAdmin).get());
         productService.createProduct(product);
         return "redirect:/admin/management/"+this.userName+"/"+this.password;
     }
@@ -162,6 +165,7 @@ public class AdminController {
 
     @PostMapping("/auth/update/product")
     public String postUpdateProduct(@Validated Product product) {
+        product.setAdministrator(administratorService.findById(idAdmin).get());
         productService.createProduct(product);
         return "redirect:/management/stock";
     }
@@ -204,6 +208,11 @@ public class AdminController {
         return "redirect:/management/categories";
     }
 
+    /**
+     * suppliers endpoints
+     * @param model
+     * @return
+     */
     @GetMapping("/management/suppliers")
     public String getSuppliers(Model model) {
         model.addAttribute("suppliers",supplierService.findAll());

@@ -33,6 +33,6 @@ public class Product {
     @JoinColumn(name = "fk_id_supplier", referencedColumnName = "id_supplier",nullable = false)
     private Supplier supplier;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     private Administrator administrator;
 }

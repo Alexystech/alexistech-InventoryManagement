@@ -22,6 +22,6 @@ public class Category {
     @Column(name = "name_category",length = 50)
     private String nameCategory;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     private Administrator administrator;
 }
