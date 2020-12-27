@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Validation {
 
-    public boolean haveAnyProductByCategory(List<Product>products, Category category) {
+    public boolean haveAnyProductByCategory(List<Product> products, Category category) {
         boolean definition = false;
         for (Product product : products) {
             if (product.getCategory().getIdCategory() == category.getIdCategory()) {
@@ -19,7 +19,7 @@ public class Validation {
         return definition;
     }
 
-    public boolean haveAnyProductBySupplier(List<Product>products, Supplier supplier) {
+    public boolean haveAnyProductBySupplier(List<Product> products, Supplier supplier) {
         boolean definition = false;
         for (Product product : products) {
             if (product.getSupplier().getIdSupplier() == supplier.getIdSupplier()) {

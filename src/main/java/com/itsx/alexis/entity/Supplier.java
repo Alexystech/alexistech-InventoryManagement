@@ -19,7 +19,7 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSupplier;
 
-    @Column(name = "name_supplier",length = 50)
+    @Column(name = "name_supplier", length = 50)
     private String nameSupplier;
 
     @OneToOne(fetch = FetchType.EAGER)

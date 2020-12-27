@@ -7,7 +7,10 @@ import java.util.Optional;
 
 public interface AdministratorService {
     void createAdministrator(Administrator administrator);
+
     Optional<Administrator> findById(int id);
+
     void deleteAdministrator(int id);
-    List<Administrator>findAll();
+
+    List<Administrator> findAll();
 }

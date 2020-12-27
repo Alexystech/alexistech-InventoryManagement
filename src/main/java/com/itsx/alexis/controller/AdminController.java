@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class AdminController {
@@ -42,16 +40,17 @@ public class AdminController {
     private int idAdmin;
 
     /**
-     *Este endpoint mostrara el dashboard del administrador
+     * Este endpoint mostrara el dashboard del administrador
      * desde este punto se tiene acceso a todas las acciones
      * disponibles de la aplicacion.
+     *
      * @param userName
      * @param password
      * @param model
      * @return
      */
     @GetMapping("/admin/management/{userName}/{password}")
-    public String getRegister(@PathVariable("userName") String userName,@PathVariable("password") String password, Model model) {
+    public String getRegister(@PathVariable("userName") String userName, @PathVariable("password") String password, Model model) {
 
         this.userName = userName;
         this.password = password;
@@ -65,21 +64,29 @@ public class AdminController {
                 userName
         );
 
-        model.addAttribute("administrator",administrator);
-        model.addAttribute("product",new Product());
-        model.addAttribute("category",new Category());
-        model.addAttribute("supplier",new Supplier());
+        model.addAttribute("administrator", administrator);
+        model.addAttribute("product", new Product());
+        model.addAttribute("category", new Category());
+        model.addAttribute("supplier", new Supplier());
 
-        model.addAttribute("administrators",administratorService.findAll());
-        model.addAttribute("categories",categoryService.findAll());
-        model.addAttribute("products",productService.findAll());
-        model.addAttribute("suppliers",supplierService.findAll());
+        model.addAttribute("administrators", administratorService.findAll());
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("products", productService.findAll());
+        model.addAttribute("suppliers", supplierService.findAll());
+
+        Map<String, Integer> ss = new LinkedHashMap<>();
+        ss.put("Java",40);
+        ss.put("Javascript",10);
+        ss.put("Laravel",15);
+
+        model.addAttribute("map",ss);
 
         return "management";
     }
 
     /**
      * Endpoint donde se almacena en la base de datos el producto.
+     *
      * @param product
      * @return
      */
@@ -87,35 +94,36 @@ public class AdminController {
     public String saveProduct(@Validated Product product) {
         product.setAdministrator(administratorService.findById(idAdmin).get());
         productService.createProduct(product);
-        return "redirect:/admin/management/"+this.userName+"/"+this.password;
+        return "redirect:/admin/management/" + this.userName + "/" + this.password;
     }
 
     /**
      * Endpoint donde se almacena en la base de datos la categoria.
+     *
      * @param category
      * @return
      */
     @PostMapping("/auth/save/category")
     private String saveCategory(@Validated Category category) {
         categoryService.createCategory(category);
-        return "redirect:/admin/management/"+this.userName+"/"+this.password;
+        return "redirect:/admin/management/" + this.userName + "/" + this.password;
     }
 
     /**
      * Endpoint donde se almacena en la base de datos en proveedor.
+     *
      * @param supplier
      * @return
      */
     @PostMapping("/auth/save/supplier")
     public String saveSupplier(@Validated Supplier supplier) {
         supplierService.createSupplier(supplier);
-        return "redirect:/admin/management/"+this.userName+"/"+this.password;
+        return "redirect:/admin/management/" + this.userName + "/" + this.password;
     }
 
     //Endpoints administrativos
 
     /**
-     *
      * @param model
      * @return
      */
@@ -123,8 +131,8 @@ public class AdminController {
     public String getStockViewer(Model model) {
         List<Category> categories = categoryService.findAll();
 
-        model.addAttribute("categories",categories);
-        model.addAttribute("categoryUtility",new CategoryUtility());
+        model.addAttribute("categories", categories);
+        model.addAttribute("categoryUtility", new CategoryUtility());
 
         return "stockviewer";
     }
@@ -137,29 +145,29 @@ public class AdminController {
         if (categoryUtility.getId() != 0) {
             Optional<Category> category = categoryService.findById(categoryUtility.getId());
 
-            model.addAttribute("filteredProducts",filteredProducts(category
+            model.addAttribute("filteredProducts", filteredProducts(category
                     .get()
                     .getIdCategory()
             )); //filtrar productos por categorias
         }
 
-        model.addAttribute("categoryUtility",new CategoryUtility());
-        model.addAttribute("categories",categories);
+        model.addAttribute("categoryUtility", new CategoryUtility());
+        model.addAttribute("categories", categories);
 
         return "stockviewer";
     }
 
     @GetMapping("/switch/admin")
     public String getSwitch() {
-        return "redirect:/admin/management/"+userName+"/"+password;
+        return "redirect:/admin/management/" + userName + "/" + password;
     }
 
     @GetMapping("/product/update/{idProduct}")
-    public String getUpdate(@PathVariable int idProduct,Model model) {
-        Optional<Product>product = productService.findById(idProduct);
-        model.addAttribute("categories",categoryService.findAll());
-        model.addAttribute("suppliers",supplierService.findAll());
-        model.addAttribute("product",product.get());
+    public String getUpdate(@PathVariable int idProduct, Model model) {
+        Optional<Product> product = productService.findById(idProduct);
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("suppliers", supplierService.findAll());
+        model.addAttribute("product", product.get());
         return "updateFormProduct";
     }
 
@@ -177,22 +185,23 @@ public class AdminController {
     }
 
     /**
-     *  Categorias endpoints
+     * Categorias endpoints
+     *
      * @param model
      * @return
      */
     @GetMapping("/management/categories")
     public String getCategories(Model model) {
-        model.addAttribute("categories",categoryService.findAll());
-        model.addAttribute("products",productService.findAll());
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("products", productService.findAll());
         model.addAttribute("validation", new Validation());
         return "categoriesviewer";
     }
 
     @GetMapping("/category/update/{idCategory}")
-    public String getUpdateCategory(@PathVariable int idCategory,Model model) {
-        Optional<Category>category = categoryService.findById(idCategory);
-        model.addAttribute("category",category.get());
+    public String getUpdateCategory(@PathVariable int idCategory, Model model) {
+        Optional<Category> category = categoryService.findById(idCategory);
+        model.addAttribute("category", category.get());
         return "updateFormCategory";
     }
 
@@ -210,21 +219,22 @@ public class AdminController {
 
     /**
      * suppliers endpoints
+     *
      * @param model
      * @return
      */
     @GetMapping("/management/suppliers")
     public String getSuppliers(Model model) {
-        model.addAttribute("suppliers",supplierService.findAll());
-        model.addAttribute("products",productService.findAll());
-        model.addAttribute("validation",new Validation());
+        model.addAttribute("suppliers", supplierService.findAll());
+        model.addAttribute("products", productService.findAll());
+        model.addAttribute("validation", new Validation());
         return "supplierviewer";
     }
 
     @GetMapping("/supplier/update/{idSupplier}")
-    public String getSupplier(@PathVariable int idSupplier,Model model) {
+    public String getSupplier(@PathVariable int idSupplier, Model model) {
         Optional<Supplier> supplier = supplierService.findById(idSupplier);
-        model.addAttribute("supplier",supplier.get());
+        model.addAttribute("supplier", supplier.get());
         return "updateFormSupplier";
     }
 
@@ -242,9 +252,9 @@ public class AdminController {
 
     /**
      * Queda pendiente recuerda que la clave para resolverlo puede ser crear una clase para esto
-     * */
+     */
     private boolean haveAnyProduct() {
-        List<Product>products = productService.findAll();
+        List<Product> products = productService.findAll();
         if (products.isEmpty()) {
             return false;
         } else {
@@ -252,9 +262,9 @@ public class AdminController {
         }
     }
 
-    private List<Product>filteredProducts(int id) {
-        List<Product>list = new LinkedList<>();
-        List<Product>products = productService.findAll();
+    private List<Product> filteredProducts(int id) {
+        List<Product> list = new LinkedList<>();
+        List<Product> products = productService.findAll();
         for (Product product : products) {
             if (product.getCategory().getIdCategory() == id) {
                 list.add(product);

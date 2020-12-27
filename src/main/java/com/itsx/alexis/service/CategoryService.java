@@ -7,7 +7,10 @@ import java.util.Optional;
 
 public interface CategoryService {
     void createCategory(Category category);
+
     Optional<Category> findById(int id);
+
     void deleteCategory(int id);
-    List<Category>findAll();
+
+    List<Category> findAll();
 }

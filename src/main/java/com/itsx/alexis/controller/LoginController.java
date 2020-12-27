@@ -20,6 +20,7 @@ public class LoginController {
     /**
      * Endpoint principal donde se encuentra el
      * login de la web app.
+     *
      * @param model
      * @return
      */
@@ -27,7 +28,7 @@ public class LoginController {
     public String getLogin(Model model) {
         Login user = new Login();
 
-        model.addAttribute("loginUser",user);
+        model.addAttribute("loginUser", user);
         return "index";
     }
 
@@ -36,6 +37,7 @@ public class LoginController {
      * si el metodo {@methot isValidateAdmin} valida correctamente al
      * usuario la redireccion es al endpoint {@code /admin/management/loginUser/password}
      * de lo contrario la redireccion es para el endpoint {@code /index}.
+     *
      * @param loginUser
      * @return
      */
@@ -43,8 +45,8 @@ public class LoginController {
     public String validateAdmin(Login loginUser) {
         List<Administrator> administrators = administratorService.findAll();
 
-        if (isValidateAdmin(administrators,loginUser)) {
-            return "redirect:/admin/management/"+loginUser.getUserName()+"/"+loginUser.getPassword();
+        if (isValidateAdmin(administrators, loginUser)) {
+            return "redirect:/admin/management/" + loginUser.getUserName() + "/" + loginUser.getPassword();
         } else {
             return "redirect:/index";
         }
@@ -52,6 +54,7 @@ public class LoginController {
 
     /**
      * Metodo para validar el administrador para logeo
+     *
      * @param administrators
      * @param loginUser
      * @return

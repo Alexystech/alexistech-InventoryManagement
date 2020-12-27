@@ -17,6 +17,7 @@ public class RegisterController {
 
     /**
      * Endpoint que muestra el formulario de registro
+     *
      * @param model
      * @return
      */
@@ -31,11 +32,12 @@ public class RegisterController {
 
     /**
      * Endpoint para validar el registro
-     *
+     * <p>
      * Si el metodo {@methot isValidateRegister} valida
      * correctamente el registro se redirecciona al
      * endpoint {@code /index} de lo contrario la redireccion es
      * al endpoint {@code /validation/register}.
+     *
      * @param administrator
      * @param model
      * @return
@@ -45,7 +47,7 @@ public class RegisterController {
         Register utilityRegister = new Register();
 
         if (utilityRegister.isValidateRegister(administratorService
-                .findAll(),administrator)) {
+                .findAll(), administrator)) {
             administratorService.createAdministrator(administrator);
         } else {
             return "redirect:/register/admin";

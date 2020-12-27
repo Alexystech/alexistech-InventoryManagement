@@ -19,9 +19,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCategory;
 
-    @Column(name = "name_category",length = 50)
+    @Column(name = "name_category", length = 50)
     private String nameCategory;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private Administrator administrator;
 }

@@ -20,7 +20,7 @@ public class Product {
     private int idProduct;
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_category", referencedColumnName = "id_category",nullable = false)
+    @JoinColumn(name = "fk_id_category", referencedColumnName = "id_category", nullable = false)
     private Category category;
 
     @Column(length = 50)
@@ -30,7 +30,7 @@ public class Product {
     private int amount;
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_supplier", referencedColumnName = "id_supplier",nullable = false)
+    @JoinColumn(name = "fk_id_supplier", referencedColumnName = "id_supplier", nullable = false)
     private Supplier supplier;
 
     @OneToOne(fetch = FetchType.EAGER)
