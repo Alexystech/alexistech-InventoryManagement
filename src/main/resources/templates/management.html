@@ -69,7 +69,6 @@
          th:object="${administrator}">
 
         <!--        card del perfil de administrador-->
-        <div class="d-inline-flex">
 
             <div class="card" style="max-width: 18rem">
                 <img src="/static/img/admin.png"
@@ -100,11 +99,8 @@
             <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
             <figure class="highcharts-figure">
-                <div id="containerJSGraph"></div>
+                <div id="containerJSGraphStock"></div>
                 <p class="highcharts-description">
-                    Analise el trabajo de cada administrador en su sistema gestor de inventario!
-                    con ToDo Graph puede ver cada registro realizado por los administradores que tienen
-                    acceso a este sistema.
                 </p>
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <a th:href="@{'/management/stock'}" class="btn btn-primary">Stock Viewer</a>
@@ -113,73 +109,210 @@
                 </div>
             </figure>
 
-        </div>
+        <figure class="highcharts-figure">
+            <div id="containerGraphPercentByProduct"></div>
+            <p class="highcharts-description">
+
+            </p>
+        </figure>
+
+        <figure class="highcharts-figure">
+            <div id="containerGraphPercentByCategory"></div>
+            <p class="highcharts-description">
+            </p>
+        </figure>
+
+        <figure class="highcharts-figure">
+            <div id="containerGraphPercentBySupplier"></div>
+            <p class="highcharts-description">
+            </p>
+        </figure>
 
         <script th:inline="javascript">
 
             $(function () {
 
-                var pieColors = (function () {
-                    var colors = [],
-                        base = Highcharts.getOptions().colors[0],
-                        i;
-
-                    for (i = 0; i < 10; i += 1) {
-                        // Start out with a darkened base color (negative brighten), and end
-                        // up with a much brighter color
-                        colors.push(Highcharts.color(base).brighten((i - 3) / 7).get());
-                    }
-                    return colors;
-                }());
-
-                Highcharts.chart('containerJSGraph', {
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                    },
+                Highcharts.chart('containerJSGraphStock', {
                     title: {
-                        text: 'Browser market shares at a specific website, 2014'
+                        text: 'Stock'
                     },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    xAxis: {
+                        categories: [[${dataGraphProducts.keySet()}]]
                     },
-                    accessibility: {
-                        point: {
-                            valueSuffix: '%'
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            colors: pieColors,
-                            dataLabels: {
-                                enabled: true,
-                                format: '<b>{point.name}</b><br>{point.percentage:.1f} %',
-                                distance: -50,
-                                filter: {
-                                    property: 'percentage',
-                                    operator: '>',
-                                    value: 4
-                                }
+                    yAxis: {
+                        allowDecimals: true,
+                        title: {
+                            text: 'Values'
+                        },
+                        labels: {
+                            formatter: function () {
+                                return this.value;
                             }
                         }
                     },
+                    labels: {
+                        items: [{
+                            html: 'Total productos',
+                            style: {
+                                left: '50px',
+                                top: '18px',
+                                color: ( // theme
+                                    Highcharts.defaultOptions.title.style &&
+                                    Highcharts.defaultOptions.title.style.color
+                                ) || 'black'
+                            }
+                        }]
+                    },
                     series: [{
-                        name: 'Share',
-                        data: [
-                            { name: 'Chrome', y: 61.41 },
-                            { name: 'Internet Explorer', y: 11.84 },
-                            { name: 'Firefox', y: 10.85 },
-                            { name: 'Edge', y: 4.67 },
-                            { name: 'Safari', y: 4.18 },
-                            { name: 'Other', y: 7.05 }
-                        ]
+                        type: 'column',
+                        name: 'productos',
+                        data: [[${dataGraphProducts.values()}]]
+                    }, {
+                        type: 'spline',
+                        name: 'Porcentaje',
+                        data: [[${percentsGraph.values()}]],
+                        marker: {
+                            lineWidth: 2,
+                            lineColor: Highcharts.getOptions().colors[3],
+                            fillColor: 'white'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name} <b>{point.y:,.2f}</b>%'
+                        }
+                    }, {
+                        type: 'pie',
+                        name: 'Total Stock',
+                        data: [{
+                            name: 'productos',
+                            y: [[${totalStock}]],
+                            color: Highcharts.getOptions().colors[2] // Product's color
+                        }],
+                        center: [100, 80],
+                        size: 100,
+                        showInLegend: false,
+                        dataLabels: {
+                            enabled: false
+                        }
                     }]
                 });
 
+            })
+
+            $(function drawBarChartByProduct() {
+                Highcharts.chart('containerGraphPercentByProduct', {
+                    chart: {
+                        type: 'area'
+                    },
+                    accessibility: {
+                        description: 'Estos son los porcentajes de cada producto en stock'
+                    },
+                    title: {
+                        text: 'Porcentajes de productos'
+                    },
+                    subtitle: {
+                        text: 'Estos son los porcentajes de cada producto en stock'
+                    },
+                    xAxis: {
+                        categories: [[${percentsGraph.keySet()}]]
+                    },
+                    yAxis: {
+                        allowDecimals: true,
+                        title: {
+                            text: 'Porcentajes'
+                        },
+                        labels: {
+                            formatter: function () {
+                                return this.value;
+                            }
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name} <b>{point.y:,.2f}</b>%'
+                    },
+                    series: [{
+                        name: 'Productos',
+                        data: [[${percentsGraph.values()}]],
+                        color: Highcharts.getOptions().colors[7]
+                    }]
+                });
+            })
+
+            $(function drawBarChartByCategory() {
+                Highcharts.chart('containerGraphPercentByCategory', {
+                    chart: {
+                        type: 'area'
+                    },
+                    accessibility: {
+                        description: 'Estos son los porcentajes de cada categoria en stock'
+                    },
+                    title: {
+                        text: 'Porcentajes de categorias'
+                    },
+                    subtitle: {
+                        text: 'Estos son los porcentajes de cada categoria en stock'
+                    },
+                    xAxis: {
+                        categories: [[${percentsByCategory.keySet()}]]
+                    },
+                    yAxis: {
+                        allowDecimals: true,
+                        title: {
+                            text: 'Porcentajes'
+                        },
+                        labels: {
+                            formatter: function () {
+                                return this.value;
+                            }
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name} <b>{point.y:,.2f}</b>%'
+                    },
+                    series: [{
+                        name: 'categorias',
+                        data: [[${percentsByCategory.values()}]],
+                        color: Highcharts.getOptions().colors[2]
+                    }]
+                });
+            })
+
+            $(function drawBarChartBySupplier() {
+                Highcharts.chart('containerGraphPercentBySupplier', {
+                    chart: {
+                        type: 'area'
+                    },
+                    accessibility: {
+                        description: 'Estos son los porcentajes de cada proveedor'
+                    },
+                    title: {
+                        text: 'Porcentajes de proveedores'
+                    },
+                    subtitle: {
+                        text: 'Estos son los porcentajes de cada proveedor'
+                    },
+                    xAxis: {
+                        categories: [[${percentsBySupplier.keySet()}]]
+                    },
+                    yAxis: {
+                        allowDecimals: true,
+                        title: {
+                            text: 'Porcentajes'
+                        },
+                        labels: {
+                            formatter: function () {
+                                return this.value;
+                            }
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name} <b>{point.y:,.2f}</b>%'
+                    },
+                    series: [{
+                        name: 'Proveedores',
+                        data: [[${percentsBySupplier.values()}]],
+                        color: Highcharts.getOptions().colors[1]
+                    }]
+                });
             })
         </script>
 

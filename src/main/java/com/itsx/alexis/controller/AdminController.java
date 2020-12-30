@@ -11,6 +11,7 @@ import com.itsx.alexis.service.SupplierService;
 import com.itsx.alexis.utility.CategoryUtility;
 import com.itsx.alexis.utility.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ReactiveAdapterRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -36,7 +37,6 @@ public class AdminController {
     private SupplierService supplierService;
 
     private String userName;
-    private String password;
     private int idAdmin;
 
     /**
@@ -45,15 +45,13 @@ public class AdminController {
      * disponibles de la aplicacion.
      *
      * @param userName
-     * @param password
      * @param model
      * @return
      */
-    @GetMapping("/admin/management/{userName}/{password}")
-    public String getRegister(@PathVariable("userName") String userName, @PathVariable("password") String password, Model model) {
+    @GetMapping("/admin/management/{userName}")
+    public String getRegister(@PathVariable("userName") String userName, Model model) {
 
         this.userName = userName;
-        this.password = password;
         this.idAdmin = getAdministrator(administratorService.findAll(), userName).getId();
         Product product;
         Category category;
@@ -74,14 +72,128 @@ public class AdminController {
         model.addAttribute("products", productService.findAll());
         model.addAttribute("suppliers", supplierService.findAll());
 
-        Map<String, Integer> ss = new LinkedHashMap<>();
-        ss.put("Java",40);
-        ss.put("Javascript",10);
-        ss.put("Laravel",15);
+        Map<String, Integer>dataGraphProducts = new HashMap<>();
+        Map<String, Double>percentsGraph = new HashMap<>();
+        int totalProducts = totalStok(productService.findAll());
+        List<Double>overages = percents(productService.findAll(),totalProducts);
 
-        model.addAttribute("map",ss);
+        for (int x = 0; x < productService.findAll().size(); x++) {
+            dataGraphProducts
+                    .put(productService
+                            .findAll()
+                            .get(x)
+                            .getName(),
+                            productService
+                                    .findAll()
+                                    .get(x)
+                                    .getAmount()
+                    );
+        }
+
+        for (int x = 0; x < productService.findAll().size(); x++) {
+            percentsGraph.put(productService
+                    .findAll()
+                    .get(x)
+                    .getName(),overages.get(x));
+        }
+
+        model.addAttribute("dataGraphProducts",dataGraphProducts);
+        model.addAttribute("percentsGraph",percentsGraph);
+        model.addAttribute("totalStock", totalStok(productService.findAll()) );
+
+        //filtrar por categorias y sacar los porcentajes
+        Map<String,Double>percentsByCategory = new HashMap<>();
+        int countKey = 0;
+
+        for (Category category1 : categoryService.findAll()) {
+            List<Product>productList = filteredProductsByCategory(category1.getIdCategory());
+            int totalAmountByCategory = totalStok(productList);
+
+            percentsByCategory.put(categoryService
+                    .findAll()
+                    .get(countKey)
+                    .getNameCategory(),percentProduct(totalAmountByCategory,totalProducts));
+            countKey++;
+        }
+
+        model.addAttribute("percentsByCategory",percentsByCategory);
+
+        //filtrar por proveedores y sacar los porcentajes
+        Map<String,Double>percentBySupplier = new HashMap<>();
+        countKey = 0;
+
+        for (Supplier supplier1 : supplierService.findAll()) {
+            List<Product>productList = filteredProductsBySuppliers(supplier1.getIdSupplier());
+            int totalAmountBySupplier = totalStok(productList);
+
+            percentBySupplier.put(supplierService
+                    .findAll()
+                    .get(countKey)
+                    .getNameSupplier(),percentProduct(totalAmountBySupplier,totalProducts));
+            countKey++;
+        }
+
+        model.addAttribute("percentsBySupplier",percentBySupplier);
 
         return "management";
+    }
+
+    /**
+     * este metodo me sirve para calcular la cantidad total de
+     * productos que estan registardos en el almacen
+     * @param products
+     * @return
+     */
+    private int totalStok(List<Product>products) {
+        int totalStok = 0;
+
+        for (Product product : products) {
+            totalStok += product.getAmount();
+        }
+
+        return totalStok;
+    }
+
+    /**
+     * este metodo me sirve para calcular los porcentajes de cada producto
+     * @param products
+     * @param totalProducts
+     * @return
+     */
+    private List<Double> percents(List<Product>products, int totalProducts) {
+
+        List<Double>overages = new LinkedList<>();
+
+        for (Product product : products) {
+            overages.add(percentProduct(product,totalProducts));
+        }
+
+        return overages;
+    }
+
+    /**
+     * este metodo me sirve para calcular el porcentaje del monto
+     * de un tipo de producto
+     * @param product
+     * @param totalProducts
+     * @return
+     */
+    private double percentProduct(Product product, int totalProducts) {
+        final float oneHondred = 100.00f;
+        return (product.getAmount() * oneHondred) / totalProducts;
+    }
+
+    /**
+     * este metodo me sirve para calcular el porcentaje de un total de
+     * productos los cuales han sido filtrados por categorias/proveedores
+     * anteriormente
+     * @param totalAmount
+     * @param totalProducts
+     * @return
+     */
+    private double percentProduct(int totalAmount, int totalProducts) {
+        final float oneHondred = 100.00f;
+        return (totalAmount * oneHondred) / totalProducts;
     }
 
     /**
@@ -92,9 +204,8 @@ public class AdminController {
      */
     @PostMapping("/auth/save/product")
     public String saveProduct(@Validated Product product) {
-        product.setAdministrator(administratorService.findById(idAdmin).get());
         productService.createProduct(product);
-        return "redirect:/admin/management/" + this.userName + "/" + this.password;
+        return "redirect:/admin/management/" + this.userName;
     }
 
     /**
@@ -106,7 +217,7 @@ public class AdminController {
     @PostMapping("/auth/save/category")
     private String saveCategory(@Validated Category category) {
         categoryService.createCategory(category);
-        return "redirect:/admin/management/" + this.userName + "/" + this.password;
+        return "redirect:/admin/management/" + this.userName;
     }
 
     /**
@@ -118,7 +229,7 @@ public class AdminController {
     @PostMapping("/auth/save/supplier")
     public String saveSupplier(@Validated Supplier supplier) {
         supplierService.createSupplier(supplier);
-        return "redirect:/admin/management/" + this.userName + "/" + this.password;
+        return "redirect:/admin/management/" + this.userName;
     }
 
     //Endpoints administrativos
@@ -145,7 +256,7 @@ public class AdminController {
         if (categoryUtility.getId() != 0) {
             Optional<Category> category = categoryService.findById(categoryUtility.getId());
 
-            model.addAttribute("filteredProducts", filteredProducts(category
+            model.addAttribute("filteredProducts", filteredProductsByCategory(category
                     .get()
                     .getIdCategory()
             )); //filtrar productos por categorias
@@ -159,7 +270,7 @@ public class AdminController {
 
     @GetMapping("/switch/admin")
     public String getSwitch() {
-        return "redirect:/admin/management/" + userName + "/" + password;
+        return "redirect:/admin/management/" + userName;
     }
 
     @GetMapping("/product/update/{idProduct}")
@@ -173,7 +284,6 @@ public class AdminController {
 
     @PostMapping("/auth/update/product")
     public String postUpdateProduct(@Validated Product product) {
-        product.setAdministrator(administratorService.findById(idAdmin).get());
         productService.createProduct(product);
         return "redirect:/management/stock";
     }
@@ -262,11 +372,36 @@ public class AdminController {
         }
     }
 
-    private List<Product> filteredProducts(int id) {
+    /**
+     * Este metodo me sirve para filtrar los productos por categorias
+     * recibe por parametro el id de la categoria y retorna una
+     * lista con los productos relacionados
+     * @param idCategory
+     * @return
+     */
+    private List<Product> filteredProductsByCategory(int idCategory) {
         List<Product> list = new LinkedList<>();
         List<Product> products = productService.findAll();
         for (Product product : products) {
-            if (product.getCategory().getIdCategory() == id) {
+            if (product.getCategory().getIdCategory() == idCategory) {
+                list.add(product);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * Este metodo me sirve para filtrar los productos por proveedores
+     * recive por parametro el id de la categoria y retorna una
+     * lista con los productos relacionados
+     * @param idSupplier
+     * @return
+     */
+    private List<Product> filteredProductsBySuppliers(int idSupplier) {
+        List<Product> list = new LinkedList<>();
+        List<Product> products = productService.findAll();
+        for (Product product : products) {
+            if (product.getSupplier().getIdSupplier() == idSupplier) {
                 list.add(product);
             }
         }

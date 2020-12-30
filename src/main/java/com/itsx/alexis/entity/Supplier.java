@@ -22,6 +22,4 @@ public class Supplier {
     @Column(name = "name_supplier", length = 50)
     private String nameSupplier;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private Administrator administrator;
 }

@@ -46,7 +46,7 @@ public class LoginController {
         List<Administrator> administrators = administratorService.findAll();
 
         if (isValidateAdmin(administrators, loginUser)) {
-            return "redirect:/admin/management/" + loginUser.getUserName() + "/" + loginUser.getPassword();
+            return "redirect:/admin/management/" + loginUser.getUserName();
         } else {
             return "redirect:/index";
         }

@@ -22,6 +22,4 @@ public class Category {
     @Column(name = "name_category", length = 50)
     private String nameCategory;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private Administrator administrator;
 }

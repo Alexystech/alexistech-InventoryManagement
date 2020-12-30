@@ -61,6 +61,7 @@ h1 {
     border: none;
     outline: none;
     height: 40px;
+    border-radius: 8px;
     background: #257;
     color: #fff;
     font-size: 18px;
