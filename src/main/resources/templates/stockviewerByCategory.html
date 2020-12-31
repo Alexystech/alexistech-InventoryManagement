@@ -37,29 +37,39 @@
             </a>
         </li>
     </ul>
-    <a th:href="@{'/switch/admin'}" align="right"><h2 class="text-muted" style="font-size: 18px">Regresar</h2></a>
+    <a th:href="@{'/management/stock'}" align="right"><h2 class="text-muted" style="font-size: 18px">Regresar</h2></a>
 </nav>
 
-<p class="h1">Stock Viewer
-    <small class="text-muted">Selecciona la categoria que quieras consultar</small>
-</p>
-
-<!--selector de categorias-->
-<form th:action="@{'/management/stock/by/category'}" th:object="${categoryUtility}" method="post">
-    <div class="input-group mb-3">
-        <div class="input-group-append">
-            <label class="custom-select" for="inputGroupSelect01">Categoria</label>
-        </div>
-        <select th:field="*{id}" class="custom-select" id="inputGroupSelect01" required="required">
-            <option selected value=0></option>
-            <div th:each="categoryItem : ${categories}">
-                <option th:value="${categoryItem.idCategory}"
-                        th:text="${categoryItem.getNameCategory()}"></option>
-            </div>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-info">Consultar productos</button>
-</form>
+<!--Tabla de productos por categorias-->
+<div th:if="${filteredProducts}">
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Existencia</th>
+            <th scope="col">Proveedor</th>
+            <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody th:each="product : ${filteredProducts}">
+        <tr>
+            <th scope="row" th:text="${product.getIdProduct()}"></th>
+            <td th:text="${product.getName()}"></td>
+            <td th:text="${product.getCategory().getNameCategory()}"></td>
+            <td th:text="${product.getPrice()}"></td>
+            <td th:text="${product.getAmount()}"></td>
+            <td th:text="${product.getSupplier().getNameSupplier()}"></td>
+            <td>
+                <a th:href="@{/product/update/}+${product.getIdProduct()}" class="btn btn-warning">Actualizar</a>
+                <a th:href="@{/product/delete/}+${product.getIdProduct()}" class="btn btn-danger">Eliminar</>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>

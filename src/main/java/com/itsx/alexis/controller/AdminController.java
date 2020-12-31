@@ -235,6 +235,22 @@ public class AdminController {
     //Endpoints administrativos
 
     /**
+     * para la nueva feature vas a tener que resivir
+     * el id de la categoria por parametro en el
+     * /management/stock/by/category/{idCategory}
+     * por lo que desde el /management/stock tienes que mandar un
+     * id mas no un objeto.
+     *
+     * una vez tengas el id en el /management/stock/by/category/{idCategory}
+     * tienes que mandar a traer la categoria a la que corresponde esa id
+     * para mandar el objeto a la capa del view
+     *
+     * tienes que mandar el id a la vista para poder usarlo en el navbar
+     * para regresar al punto anterior a la hora de actualizar y eliminar
+     */
+
+    /**
+     * Revisar este punto para la nueva feature
      * @param model
      * @return
      */
@@ -248,8 +264,14 @@ public class AdminController {
         return "stockviewer";
     }
 
-    @PostMapping("/management/stock/by/category")
-    public String postStockViewer(CategoryUtility categoryUtility, Model model) {
+    /**
+     * revisar este punto para la nueva feature
+     * @param categoryUtility
+     * @param model
+     * @return
+     */
+    @PostMapping("/management/stock/by/category/{idCategory}")
+    public String postStockViewer(@PathVariable CategoryUtility categoryUtility, Model model) {
 
         List<Category> categories = categoryService.findAll();
 
@@ -265,7 +287,7 @@ public class AdminController {
         model.addAttribute("categoryUtility", new CategoryUtility());
         model.addAttribute("categories", categories);
 
-        return "stockviewer";
+        return "stockviewerByCategory";
     }
 
     @GetMapping("/switch/admin")
@@ -273,6 +295,12 @@ public class AdminController {
         return "redirect:/admin/management/" + userName;
     }
 
+    /**
+     * revisar este punto para la nueva feature
+     * @param idProduct
+     * @param model
+     * @return
+     */
     @GetMapping("/product/update/{idProduct}")
     public String getUpdate(@PathVariable int idProduct, Model model) {
         Optional<Product> product = productService.findById(idProduct);
@@ -282,12 +310,22 @@ public class AdminController {
         return "updateFormProduct";
     }
 
+    /**
+     * revisar este punto para la nueva feature
+     * @param product
+     * @return
+     */
     @PostMapping("/auth/update/product")
     public String postUpdateProduct(@Validated Product product) {
         productService.createProduct(product);
         return "redirect:/management/stock";
     }
 
+    /**
+     * revisar este punto para la nueva feature
+     * @param idProduct
+     * @return
+     */
     @GetMapping("/product/delete/{idProduct}")
     public String deleteProduct(@PathVariable int idProduct) {
         productService.removeProduct(idProduct);
