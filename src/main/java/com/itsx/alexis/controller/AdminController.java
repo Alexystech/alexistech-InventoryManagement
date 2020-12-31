@@ -266,28 +266,34 @@ public class AdminController {
 
     /**
      * revisar este punto para la nueva feature
-     * @param categoryUtility
+     * @param idCategory
      * @param model
      * @return
      */
-    @PostMapping("/management/stock/by/category/{idCategory}")
-    public String postStockViewer(@PathVariable CategoryUtility categoryUtility, Model model) {
+    @GetMapping("/management/stock/by/category/{idCategory}")
+    public String postStockViewer(@PathVariable int idCategory, Model model) {
 
         List<Category> categories = categoryService.findAll();
 
-        if (categoryUtility.getId() != 0) {
-            Optional<Category> category = categoryService.findById(categoryUtility.getId());
+        Optional<Category> category = categoryService.findById(idCategory);
 
-            model.addAttribute("filteredProducts", filteredProductsByCategory(category
-                    .get()
-                    .getIdCategory()
-            )); //filtrar productos por categorias
-        }
+        model.addAttribute("filteredProducts", filteredProductsByCategory(category
+                .get()
+                .getIdCategory()
+        )); //filtrar productos por categorias
 
-        model.addAttribute("categoryUtility", new CategoryUtility());
         model.addAttribute("categories", categories);
+        model.addAttribute("idCategory", idCategory);
 
         return "stockviewerByCategory";
+    }
+
+    @PostMapping("/redirect/filter/category")
+    public String postFilterCategory(CategoryUtility categoryUtility) {
+        if (categoryUtility.getId() == 0) {
+            return "redirect:/management/stock";
+        }
+        return "redirect:/management/stock/by/category/"+categoryUtility.getId();
     }
 
     @GetMapping("/switch/admin")
@@ -304,9 +310,12 @@ public class AdminController {
     @GetMapping("/product/update/{idProduct}")
     public String getUpdate(@PathVariable int idProduct, Model model) {
         Optional<Product> product = productService.findById(idProduct);
+        int idCategory = product.get().getCategory().getIdCategory();
+
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("suppliers", supplierService.findAll());
         model.addAttribute("product", product.get());
+        model.addAttribute("idCategory",idCategory);
         return "updateFormProduct";
     }
 
@@ -317,8 +326,9 @@ public class AdminController {
      */
     @PostMapping("/auth/update/product")
     public String postUpdateProduct(@Validated Product product) {
+        int idCategory = product.getCategory().getIdCategory();
         productService.createProduct(product);
-        return "redirect:/management/stock";
+        return "redirect:/management/stock/by/category/"+idCategory;
     }
 
     /**
@@ -326,10 +336,10 @@ public class AdminController {
      * @param idProduct
      * @return
      */
-    @GetMapping("/product/delete/{idProduct}")
-    public String deleteProduct(@PathVariable int idProduct) {
+    @GetMapping("/product/delete/{idCategory}/{idProduct}")
+    public String deleteProduct(@PathVariable int idCategory,@PathVariable int idProduct) {
         productService.removeProduct(idProduct);
-        return "redirect:/management/stock";
+        return "redirect:/management/stock/by/category/"+idCategory;
     }
 
     /**

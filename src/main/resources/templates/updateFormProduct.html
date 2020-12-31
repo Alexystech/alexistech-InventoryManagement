@@ -36,7 +36,7 @@
             </a>
         </li>
     </ul>
-    <a th:href="@{'/management/stock'}" align="right"><h2 class="text-muted" style="font-size: 18px">Regresar</h2></a>
+    <a th:href="@{'/management/stock/by/category/'}+${idCategory}" align="right"><h2 class="text-muted" style="font-size: 18px">Regresar</h2></a>
 </nav>
 
 <form th:action="@{'/auth/update/product'}" th:object="${product}" method="post">

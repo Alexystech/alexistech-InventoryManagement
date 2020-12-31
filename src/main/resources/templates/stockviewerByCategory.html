@@ -64,7 +64,7 @@
             <td th:text="${product.getSupplier().getNameSupplier()}"></td>
             <td>
                 <a th:href="@{/product/update/}+${product.getIdProduct()}" class="btn btn-warning">Actualizar</a>
-                <a th:href="@{/product/delete/}+${product.getIdProduct()}" class="btn btn-danger">Eliminar</>
+                <a th:href="@{/product/delete/}+${idCategory}+@{/}+${product.getIdProduct()}" class="btn btn-danger">Eliminar</a>
             </td>
         </tr>
         </tbody>
