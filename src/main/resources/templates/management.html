@@ -145,6 +145,30 @@
             </p>
         </figure>
 
+        <div class="graphContainers">
+            <div class="card-graph">
+                <figure class="highcharts-figure">
+                    <div id="containerGraphQuantityProducts"></div>
+                    <p class="highcharts-description">
+                    </p>
+                </figure>
+            </div>
+            <div class="card-graph">
+                <figure class="highcharts-figure">
+                    <div id="containerGraphQuantityCategories"></div>
+                    <p class="highcharts-description">
+                    </p>
+                </figure>
+            </div>
+            <div class="card-graph">
+                <figure class="highcharts-figure">
+                    <div id="containerGraphQuantitySuppliers"></div>
+                    <p class="highcharts-description">
+                    </p>
+                </figure>
+            </div>
+        </div>
+
         <script th:inline="javascript">
 
             $(function () {
@@ -331,6 +355,58 @@
                     }]
                 });
             })
+
+            $(function drawPieCharProducts() {
+                Highcharts.chart('containerGraphQuantityProducts', {
+                    title: {
+                        text: 'Productos'
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'Cantidad de productos',
+                        data: [{
+                            name: 'productos',
+                            y: [[${cantidadProductos}]],
+                            color: Highcharts.getOptions().colors[7]
+                        }]
+                    }]
+                });
+            })
+
+            $(function drawPieCharProducts() {
+                Highcharts.chart('containerGraphQuantityCategories', {
+                    title: {
+                        text: 'Categorias'
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'Cantidad de categorias',
+                        data: [{
+                            name: 'categorias',
+                            y: [[${cantidadCategorias}]],
+                            color: Highcharts.getOptions().colors[2]
+                        }]
+                    }]
+                });
+            })
+
+            $(function drawPieCharProducts() {
+                Highcharts.chart('containerGraphQuantitySuppliers', {
+                    title: {
+                        text: 'Proveedores'
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'Cantidad de proveedores',
+                        data: [{
+                            name: 'proveedores',
+                            y: [[${cantidadProveedores}]],
+                            color: Highcharts.getOptions().colors[1]
+                        }]
+                    }]
+                });
+            })
+
         </script>
 
     </div>

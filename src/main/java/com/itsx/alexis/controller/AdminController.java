@@ -135,6 +135,18 @@ public class AdminController {
 
         model.addAttribute("percentsBySupplier",percentBySupplier);
 
+        //mandar cantidad de productos
+        int cantidadProductos = productService.findAll().size();
+        model.addAttribute("cantidadProductos", cantidadProductos);
+
+        //mandar cantidad de categorias
+        int cantidadCategorias = categoryService.findAll().size();
+        model.addAttribute("cantidadCategorias", cantidadCategorias);
+
+        //mandar cantidad de proveedores
+        int cantidadProveedores = supplierService.findAll().size();
+        model.addAttribute("cantidadProveedores",cantidadProveedores);
+
         return "management";
     }
 
