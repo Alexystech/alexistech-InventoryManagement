@@ -1,0 +1,11 @@
+.card {
+    margin-top: 64px;
+    alignment: center;
+    width: 50%;
+    margin-left: 25%;
+    text-align: center;
+}
+
+.row {
+    align-items: center;
+}

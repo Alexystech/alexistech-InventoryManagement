@@ -11,11 +11,10 @@ import com.itsx.alexis.service.SupplierService;
 import com.itsx.alexis.utility.CategoryUtility;
 import com.itsx.alexis.utility.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ReactiveAdapterRegistry;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -287,6 +286,7 @@ public class AdminController {
     public String getStockViewer(Model model) {
         List<Category> categories = categoryService.findAll();
 
+        model.addAttribute("idAdmin",idAdmin);
         model.addAttribute("categories", categories);
         model.addAttribute("categoryUtility", new CategoryUtility());
 
@@ -458,6 +458,13 @@ public class AdminController {
     public String deleteSupplier(@PathVariable int idSupplier) {
         supplierService.removeSupplier(idSupplier);
         return "redirect:/management/suppliers";
+    }
+
+    @GetMapping("/profile/{idAdministrator}")
+    public String getProfile(@PathVariable int idAdministrator,Model model) {
+        Optional<Administrator> administrator = administratorService.findById(idAdministrator);
+        model.addAttribute("administrator",administrator.get());
+        return "profile";
     }
 
     /**

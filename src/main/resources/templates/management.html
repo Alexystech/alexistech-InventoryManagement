@@ -35,9 +35,9 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid">
-        <a class="nav-link" href="#"><h2 class="text-light bg-dark" style="font-size: 20px">Abarrotes viviana</h2></a>
+        <a class="nav-link" href="#"><h2 class="text-dark" style="font-size: 20px">Abarrotes viviana</h2></a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -45,19 +45,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a th:href="@{'/management/stock'}" align="right"><h2 class="nav-link" style="font-size: 18px">Stock Viewer</h2></a>
+                    <a th:href="@{'/management/stock'}" align="right"><h2 class="nav-link text-lg-right" style="font-size: 18px">Stock Viewer</h2></a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{'/management/categories'}" align="right"><h2 class="nav-link" style="font-size: 18px">Categorias</h2></a>
+                    <a th:href="@{'/management/categories'}" align="right"><h2 class="nav-link text-lg-right" style="font-size: 18px">Categorias</h2></a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{'/management/suppliers'}" align="right"><h2 class="nav-link" style="font-size: 18px">Proveedores</h2></a>
+                    <a th:href="@{'/management/suppliers'}" align="right"><h2 class="nav-link text-lg-right" style="font-size: 18px">Proveedores</h2></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" align="right"><h2 class="nav-link" style="font-size: 18px">Perfil</h2></a>
+                    <a th:href="@{'/profile/'}+${administrator.getId()}" align="right"><h2 class="nav-link text-lg-right" style="font-size: 18px">Perfil</h2></a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{'/index'}" align="right"><h2 class="nav-link text-muted" style="font-size: 18px">SignOut</h2></a>
+                    <a th:href="@{'/index'}" align="right"><h2 class="nav-link text-muted text-lg-right" style="font-size: 18px">SignOut</h2></a>
                 </li>
             </ul>
         </div>
@@ -90,29 +90,6 @@
     <!--profile-->
     <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab"
          th:object="${administrator}">
-
-        <!--        card del perfil de administrador-->
-
-<!--            <div class="card" style="max-width: 18rem">-->
-<!--                <img src="/static/img/admin.png"-->
-<!--                     th:src="@{/img/admin.png}" th:alt="logoUser" class="card-img-top">-->
-<!--                <div class="card-body">-->
-<!--                    <h5 class="card-title">Bienvenido-->
-<!--                        <span th:text="*{name}"> </span>-->
-<!--                        <span th:text="*{lastName}"> </span>-->
-<!--                        <span th:text="*{motherLastName}"></span>-->
-<!--                    </h5>-->
-<!--                    <p class="card-subtitle">ID</p>-->
-<!--                    <p class="card-text" th:text="*{id}"></p>-->
-<!--                    <p class="card-subtitle">Nombre de usuario</p>-->
-<!--                    <p class="card-text" th:text="*{userName}"></p>-->
-<!--                    <p class="card-subtitle">Correo</p>-->
-<!--                    <p class="card-text" th:text="*{EMail}"></p>-->
-<!--                    <p class="card-subtitle">Telefono</p>-->
-<!--                    <p class="card-text" th:text="*{cellPhone}"></p>-->
-
-<!--                </div>-->
-<!--            </div>-->
 
             <!--        grafica ToDo-->
             <script src="https://code.highcharts.com/highcharts.js"></script>
