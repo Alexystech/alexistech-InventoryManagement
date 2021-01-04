@@ -65,6 +65,7 @@
         <label for="name">Nombre del producto</label>
         <input th:field="*{name}" type="text" class="form-control" id="name" required="required"
                placeholder="Ingrese el nombre de su producto">
+        <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
     </div>
 
     <!--price-->
@@ -80,12 +81,14 @@
                 <span class="input-group-text">.00</span>
             </div>
         </div>
+        <small class="form-text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
     </div>
 
     <!--amount-->
     <div class="form-group">
         <label for="amount">Existencia</label>
         <input th:field="*{amount}" type="number" id="amount" class="form-control" required="required">
+        <small class="form-text text-danger" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></small>
     </div>
 
     <!--supplier-->

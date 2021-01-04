@@ -20,31 +20,27 @@ public class Administrator {
     private int id;
 
     @NotEmpty(message = "campo obligatorio")
-    @Min(value = 5,message = "nombre de usuario demaciado corto")
-    @Max(value = 40, message = "nombre de usuario demaciado largo")
+    @Size(min = 3, max = 40, message = "el username debe contener entre 3 y 40 caracteres")
     @Column(name = "user_name", length = 40)
     private String userName;
 
     @NotEmpty(message = "campo obligatorio")
-    @Min(value = 5, message = "nombre demaciado corto")
-    @Max(value = 20, message = "nombre demaciado largo")
+    @Size(min = 3, max = 20, message = "nombre debe contener entre 3 y 20 caracteres")
     @Column(length = 20)
     private String name;
 
     @NotEmpty(message = "campo obligatorio")
-    @Min(value = 5, message = "apellido paterno demaciado corto")
-    @Max(value = 20, message = "apellido paterno demaciado largo")
+    @Size(min = 3, max = 20, message = "apellido paterno debe contener entre 3 y 20 caracteres")
     @Column(name = "last_name", length = 20)
     private String lastName;
 
     @NotEmpty(message = "campo obligatorio")
-    @Min(value = 5, message = "apellido materno demaciado corto")
-    @Max(value = 20, message = "apellido materno demaciado largo")
+    @Size(min = 3, max = 20, message = "apellido materno debe contener entre 3 y 20 caracteres")
     @Column(name = "mother_last_name", length = 20)
     private String motherLastName;
 
     @NotEmpty(message = "campo obligatorio")
-    @Email()
+    @Email
     @Column(length = 30)
     private String eMail;
 

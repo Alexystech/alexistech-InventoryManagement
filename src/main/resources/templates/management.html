@@ -439,6 +439,7 @@
                 <label for="name">Nombre del producto</label>
                 <input th:field="*{name}" type="text" class="form-control" id="name" required="required"
                        placeholder="Ingrese el nombre de su producto">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
             </div>
 
             <!--price-->
@@ -454,12 +455,14 @@
                         <span class="input-group-text">.00</span>
                     </div>
                 </div>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
             </div>
 
             <!--amount-->
             <div class="form-group">
                 <label for="amount">Existencia</label>
                 <input th:field="*{amount}" type="number" id="amount" class="form-control" required="required">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></small>
             </div>
 
             <!--supplier-->
@@ -495,6 +498,7 @@
                 <label for="nameCategory">Nombre de Categoria</label>
                 <input th:field="*{nameCategory}" type="text" class="form-control" id="nameCategory" required="required"
                        placeholder="Ingresa nombre de categoria">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('nameCategory')}" th:errors="*{nameCategory}"></small>
             </div>
 
             <button class="btn btn-success">Agregar categoria</button>
@@ -516,6 +520,7 @@
                 <label for="nameSupplier">Nombre del proveedor</label>
                 <input th:field="*{nameSupplier}" type="text" class="form-control" id="nameSupplier" required="required"
                        placeholder="ingresa nombre del proveedor">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('nameSupplier')}" th:errors="*{nameSupplier}"></small>
             </div>
 
             <button class="btn btn-success">Agregar proveedor</button>

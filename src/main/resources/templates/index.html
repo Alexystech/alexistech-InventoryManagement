@@ -62,9 +62,11 @@
     <form th:action="@{'/validate/admin'}" th:object="${loginUser}" method="post">
         <label>Nombre de Usuario</label>
         <input th:field="*{userName}" type="text" placeholder="nombre de usuario" required="required">
+        <small class="form-text text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></small>
         <br>
         <label>Contraseña</label>
         <input th:field="*{password}" type="password" placeholder="contraseña" required="required">
+        <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
         <br>
         <button type="submit">Iniciar secion</button>
     </form>

@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ReactiveAdapterRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -215,7 +217,12 @@ public class AdminController {
      * @return
      */
     @PostMapping("/auth/save/product")
-    public String saveProduct(@Validated Product product) {
+    public String saveProduct(@Valid Product product, Errors errors) {
+        System.out.println(errors.hasErrors());
+        if (errors.hasErrors()) {
+            return "redirect:/admin/management/"+userName;
+        }
+
         productService.createProduct(product);
         return "redirect:/admin/management/" + this.userName;
     }
@@ -227,7 +234,12 @@ public class AdminController {
      * @return
      */
     @PostMapping("/auth/save/category")
-    private String saveCategory(@Validated Category category) {
+    private String saveCategory(@Valid Category category, Errors errors) {
+
+        if (errors.hasErrors()) {
+            return "redirect:/admin/management/"+userName;
+        }
+
         categoryService.createCategory(category);
         return "redirect:/admin/management/" + this.userName;
     }
@@ -239,7 +251,12 @@ public class AdminController {
      * @return
      */
     @PostMapping("/auth/save/supplier")
-    public String saveSupplier(@Validated Supplier supplier) {
+    public String saveSupplier(@Valid Supplier supplier, Errors errors) {
+
+        if (errors.hasErrors()) {
+            return "redirect:/admin/management/"+userName;
+        }
+
         supplierService.createSupplier(supplier);
         return "redirect:/admin/management/" + this.userName;
     }
@@ -337,7 +354,18 @@ public class AdminController {
      * @return
      */
     @PostMapping("/auth/update/product")
-    public String postUpdateProduct(@Validated Product product) {
+    public String postUpdateProduct(@Valid Product product, Errors errors, Model model) {
+
+        if (errors.hasErrors()) {
+            int idCategory = product.getIdProduct();
+
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("suppliers", supplierService.findAll());
+            model.addAttribute("product", product);
+            model.addAttribute("idCategory",idCategory);
+            return "updateFormProduct";
+        }
+
         int idCategory = product.getCategory().getIdCategory();
         productService.createProduct(product);
         return "redirect:/management/stock/by/category/"+idCategory;
@@ -376,7 +404,13 @@ public class AdminController {
     }
 
     @PostMapping("/auth/update/category")
-    public String postUpdateCategory(@Validated Category category) {
+    public String postUpdateCategory(@Valid Category category, Errors errors, Model model) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("category", category);
+            return "updateFormCategory";
+        }
+
         categoryService.createCategory(category);
         return "redirect:/management/categories";
     }
@@ -409,7 +443,13 @@ public class AdminController {
     }
 
     @PostMapping("/auth/update/supplier")
-    public String postUpdateSupplier(@Validated Supplier supplier) {
+    public String postUpdateSupplier(@Valid Supplier supplier, Errors errors, Model model) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("supplier", supplier);
+            return "updateFormSupplier";
+        }
+
         supplierService.createSupplier(supplier);
         return "redirect:/management/suppliers";
     }

@@ -6,9 +6,12 @@ import com.itsx.alexis.utility.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -42,7 +45,12 @@ public class LoginController {
      * @return
      */
     @PostMapping("/validate/admin")
-    public String validateAdmin(Login loginUser) {
+    public String validateAdmin(@Valid Login loginUser, Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("loginUser",loginUser);
+            return "index";
+        }
+
         List<Administrator> administrators = administratorService.findAll();
 
         if (isValidateAdmin(administrators, loginUser)) {

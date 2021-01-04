@@ -53,6 +53,7 @@
         <label for="nameCategory">Nombre de Categoria</label>
         <input th:field="*{nameCategory}" type="text" class="form-control" id="nameCategory" required="required"
                placeholder="Ingresa nombre de categoria">
+        <small class="form-text text-danger" th:if="${#fields.hasErrors('nameCategory')}" th:errors="*{nameCategory}"></small>
     </div>
 
     <button class="btn btn-success">Actualizar categoria</button>

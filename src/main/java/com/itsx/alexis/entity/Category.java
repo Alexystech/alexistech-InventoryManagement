@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -24,8 +24,7 @@ public class Category {
     private int idCategory;
 
     @NotEmpty(message = "campo obligatorio")
-    @Min(value = 3, message = "nombre de categoria demaciado corto")
-    @Max(value = 50, message = "nombre de categoria demaciado largo")
+    @Size(min = 3, max = 50, message = "el nombre debe contener entre 3 y 50 caracteres")
     @Column(name = "name_category", length = 50)
     private String nameCategory;
 

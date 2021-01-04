@@ -54,6 +54,7 @@
         <label for="nameSupplier">Nombre del proveedor</label>
         <input th:field="*{nameSupplier}" type="text" class="form-control" id="nameSupplier" required="required"
                placeholder="ingresa nombre del proveedor">
+        <small class="form-text text-danger" th:if="${#fields.hasErrors('nameSupplier')}" th:errors="*{nameSupplier}"></small>
     </div>
 
     <button class="btn btn-success">Actualizar proveedor</button>
