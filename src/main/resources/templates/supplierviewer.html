@@ -30,17 +30,33 @@
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark">
-    <ul class="nav nav-pills">
-        <li class="nav-item">
-            <a class="nav-link" href="#"><h2 class="text-light bg-dark" style="font-size: 20px">Abarrotes viviana</h2>
-            </a>
-        </li>
-    </ul>
-    <a th:href="@{'/switch/admin'}" align="right"><h2 class="text-muted" style="font-size: 18px">Regresar</h2></a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+        <a class="nav-link" th:href="@{'/switch/admin'}"><h2 class="text-dark" style="font-size: 20px">Abarrotes viviana</h2></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a th:href="@{'/management/stock'}" align="right"><h2 class="nav-link text-lg-right" style="font-size: 18px">Stock Viewer</h2></a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{'/management/categories'}" align="right"><h2 class="nav-link text-lg-right" style="font-size: 18px">Categorias</h2></a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{'/profile/'}+${idAdmin}" align="right"><h2 class="nav-link text-lg-right" style="font-size: 18px">Perfil</h2></a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{'/index'}" align="right"><h2 class="nav-link text-muted text-lg-right" style="font-size: 18px">SignOut</h2></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
 
-<p class="h1">Mis Proveedores
+<p class="h1" style="margin-top: 64px">Mis Proveedores
     <small class="text-muted">Administre los proveedores registrados</small>
 </p>
 

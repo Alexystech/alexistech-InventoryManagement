@@ -30,15 +30,20 @@
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-light bg-light fixed-top">
     <ul class="nav nav-pills">
         <li class="nav-item">
-            <a class="nav-link" href="#"><h2 class="text-light bg-dark" style="font-size: 20px">Abarrotes viviana</h2>
+            <a class="nav-link" th:href="@{'/switch/admin'}"><h2 class="text-dark" style="font-size: 20px">Abarrotes viviana</h2>
             </a>
         </li>
     </ul>
     <a th:href="@{'/management/stock'}" align="right"><h2 class="text-muted" style="font-size: 18px">Regresar</h2></a>
 </nav>
+
+<p class="h1" style="margin-top: 64px">Mis Productos
+    <small class="text-muted">Administre los productos relacionados a </small>
+    <small class="text-muted" th:text="${nameCategory}"></small>
+</p>
 
 <!--Tabla de productos por categorias-->
 <div th:if="${filteredProducts}">

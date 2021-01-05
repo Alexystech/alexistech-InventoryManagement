@@ -305,12 +305,14 @@ public class AdminController {
         List<Category> categories = categoryService.findAll();
 
         Optional<Category> category = categoryService.findById(idCategory);
+        String nameCategory = category.get().getNameCategory();
 
         model.addAttribute("filteredProducts", filteredProductsByCategory(category
                 .get()
                 .getIdCategory()
         )); //filtrar productos por categorias
 
+        model.addAttribute("nameCategory",nameCategory);
         model.addAttribute("categories", categories);
         model.addAttribute("idCategory", idCategory);
 
@@ -390,6 +392,7 @@ public class AdminController {
      */
     @GetMapping("/management/categories")
     public String getCategories(Model model) {
+        model.addAttribute("idAdmin",idAdmin);
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("products", productService.findAll());
         model.addAttribute("validation", new Validation());
@@ -429,6 +432,7 @@ public class AdminController {
      */
     @GetMapping("/management/suppliers")
     public String getSuppliers(Model model) {
+        model.addAttribute("idAdmin",idAdmin);
         model.addAttribute("suppliers", supplierService.findAll());
         model.addAttribute("products", productService.findAll());
         model.addAttribute("validation", new Validation());
