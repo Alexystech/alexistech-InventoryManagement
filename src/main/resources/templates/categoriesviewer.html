@@ -57,27 +57,28 @@
     <small class="text-muted">Administre las categorias registradas</small>
 </p>
 
-<table class="table table-hover table-dark">
-    <thead>
-    <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Acciones</th>
-    </tr>
-    </thead>
-    <tbody th:each="category : ${categories}">
-    <tr>
-        <th scope="row" th:text="${category.idCategory}"></th>
-        <td th:text="${category.nameCategory}"></td>
-        <td>
-            <!--queda pendiente la clave para resolverlo puede ser crear una clase para mandarlo al frontend-->
-            <a th:href="@{/category/update/}+${category.getIdCategory()}" class="btn btn-warning">Actualizar</a>
-            <a th:if="${!validation.haveAnyProductByCategory(products,category)}"
-               th:href="@{/category/delete/}+${category.getIdCategory()}" class="btn btn-danger">Eliminar</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div style="overflow-x: auto">
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody th:each="category : ${categories}">
+        <tr>
+            <th scope="row" th:text="${category.idCategory}"></th>
+            <td th:text="${category.nameCategory}"></td>
+            <td>
+                <a th:href="@{/category/update/}+${category.getIdCategory()}" class="btn btn-warning">Actualizar</a>
+                <a th:if="${!validation.haveAnyProductByCategory(products,category)}"
+                   th:href="@{/category/delete/}+${category.getIdCategory()}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>

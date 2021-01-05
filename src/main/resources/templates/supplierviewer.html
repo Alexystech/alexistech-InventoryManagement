@@ -57,27 +57,28 @@
     <small class="text-muted">Administre los proveedores registrados</small>
 </p>
 
-<table class="table table-hover table-dark">
-    <thead>
-    <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Acciones</th>
-    </tr>
-    </thead>
-    <tbody th:each="supplier : ${suppliers}">
-    <tr>
-        <th scope="row" th:text="${supplier.getIdSupplier()}"></th>
-        <td th:text="${supplier.getNameSupplier()}"></td>
-        <td>
-            <!--queda pendiente la clave para resolverlo puede ser crear una clase para mandarlo al front-->
-            <a th:href="@{/supplier/update/}+${supplier.getIdSupplier()}" class="btn btn-warning">Actualizar</a>
-            <a th:if="${!validation.haveAnyProductBySupplier(products,supplier)}"
-               th:href="@{/supplier/delete/}+${supplier.getIdSupplier()}" class="btn btn-danger">Eliminar</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div style="overflow-x: auto">
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody th:each="supplier : ${suppliers}">
+        <tr>
+            <th scope="row" th:text="${supplier.getIdSupplier()}"></th>
+            <td th:text="${supplier.getNameSupplier()}"></td>
+            <td>
+                <a th:href="@{/supplier/update/}+${supplier.getIdSupplier()}" class="btn btn-warning">Actualizar</a>
+                <a th:if="${!validation.haveAnyProductBySupplier(products,supplier)}"
+                   th:href="@{/supplier/delete/}+${supplier.getIdSupplier()}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>
