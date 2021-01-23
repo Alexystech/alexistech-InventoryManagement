@@ -56,6 +56,7 @@ public class RegisterController {
 
         if (utilityRegister.isValidateRegister(administratorService
                 .findAll(), administrator)) {
+            administrator.setUserName(administrator.getUserName());
             administratorService.createAdministrator(administrator);
         } else {
             return "redirect:/register/admin";

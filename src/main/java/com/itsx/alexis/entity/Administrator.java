@@ -21,6 +21,7 @@ public class Administrator {
 
     @NotEmpty(message = "campo obligatorio")
     @Size(min = 3, max = 40, message = "el username debe contener entre 3 y 40 caracteres")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "el nombre de usuario no puede contener espacios o caracteres especiales")
     @Column(name = "user_name", length = 40)
     private String userName;
 
