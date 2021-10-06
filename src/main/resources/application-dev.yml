@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: postgres
+    password:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/store?serverTimezone=UTC
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    show-sql: true
+server:
+  port: 8081

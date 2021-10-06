@@ -1,18 +1,8 @@
 spring:
   application:
     name: InventoryManagement
-  thymeleaf:
-    mode: HTML
-    cache: false
-  datasource:
-    username: root
-    password:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/store?serverTimezone=UTC
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database: mysql
-    show-sql: true
+  profiles:
+    active: dev
 server:
-  port: 9090
+  servlet:
+    context-path: "/api/slasher"

@@ -1,29 +1,32 @@
 package com.itsx.alexis.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "suppliers")
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class Supplier {
 
     @Id
-    @Column(name = "id_supplier")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idSupplier;
+    private Long idSupplier;
 
-    @NotEmpty(message = "campo obligatorio")
-    @Size(min = 3, max = 50, message = "el nombre debe contener entre 3 y 50 caracteres")
-    @Column(name = "name_supplier", length = 50)
+    @Column(length = 75)
     private String nameSupplier;
 
 }
