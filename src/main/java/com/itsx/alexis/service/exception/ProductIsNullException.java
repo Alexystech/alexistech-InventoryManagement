@@ -2,7 +2,7 @@ package com.itsx.alexis.service.exception;
 
 public class ProductIsNullException extends RuntimeException{
 
-    public ProductIsNullException of() {
+    public static ProductIsNullException of() {
         return new ProductIsNullException();
     }
 

@@ -2,7 +2,7 @@ package com.itsx.alexis.service.exception;
 
 public class AdministratorNotFoundException extends RuntimeException{
 
-    public AdministratorNotFoundException of(long idAdministrator) {
+    public static AdministratorNotFoundException of(long idAdministrator) {
         return new AdministratorNotFoundException(idAdministrator);
     }
 

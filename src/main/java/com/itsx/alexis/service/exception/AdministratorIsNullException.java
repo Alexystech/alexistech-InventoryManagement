@@ -2,7 +2,7 @@ package com.itsx.alexis.service.exception;
 
 public class AdministratorIsNullException extends RuntimeException{
 
-    public AdministratorIsNullException of() {
+    public static AdministratorIsNullException of() {
         return new AdministratorIsNullException();
     }
 

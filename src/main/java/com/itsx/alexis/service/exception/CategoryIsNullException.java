@@ -2,7 +2,7 @@ package com.itsx.alexis.service.exception;
 
 public class CategoryIsNullException extends RuntimeException{
 
-    public CategoryIsNullException of() {
+    public static CategoryIsNullException of() {
         return new CategoryIsNullException();
     }
 

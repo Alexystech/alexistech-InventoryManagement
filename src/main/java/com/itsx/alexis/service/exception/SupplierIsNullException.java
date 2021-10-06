@@ -2,7 +2,7 @@ package com.itsx.alexis.service.exception;
 
 public class SupplierIsNullException extends RuntimeException{
 
-    public SupplierIsNullException of() {
+    public static SupplierIsNullException of() {
         return new SupplierIsNullException();
     }
 

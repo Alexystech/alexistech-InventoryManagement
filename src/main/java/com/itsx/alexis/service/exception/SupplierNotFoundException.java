@@ -2,7 +2,7 @@ package com.itsx.alexis.service.exception;
 
 public class SupplierNotFoundException extends RuntimeException{
 
-    public SupplierNotFoundException of(long idSupplier) {
+    public static SupplierNotFoundException of(long idSupplier) {
         return new SupplierNotFoundException(idSupplier);
     }
 

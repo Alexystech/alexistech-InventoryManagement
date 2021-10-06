@@ -2,7 +2,7 @@ package com.itsx.alexis.service.exception;
 
 public class ProductNotFoundException extends RuntimeException{
 
-    public ProductNotFoundException of(long idProduct) {
+    public static ProductNotFoundException of(long idProduct) {
         return new ProductNotFoundException(idProduct);
     }
 
