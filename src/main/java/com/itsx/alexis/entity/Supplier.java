@@ -24,6 +24,7 @@ public class Supplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_supplier")
     private Long idSupplier;
 
     @Column(length = 75)
