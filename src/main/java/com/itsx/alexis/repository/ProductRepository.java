@@ -8,14 +8,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
     @Query(value = "SELECT c FROM Category c WHERE c.idCategory =: idCategory")
-    List<Product> findAllProductsByCategory(@Param("idCategory") long idCategory);
+    Optional<List<Product>> findAllProductsByCategory(@Param("idCategory") long idCategory);
 
     @Query(value = "SELECT s FROM Suplier s WHERE s.idSupplier =: idSupplier")
-    List<Supplier> findAllProductsBySupplier(@Param("idSupplier") long idSupplier);
+    Optional<List<Product>> findAllProductsBySupplier(@Param("idSupplier") long idSupplier);
 
 }
