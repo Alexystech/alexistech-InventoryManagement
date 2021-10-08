@@ -13,7 +13,8 @@ public enum SupportedExceptions {
     PRODUCT_IS_NULL(ProductIsNullException.class, HttpStatus.UNPROCESSABLE_ENTITY),
     PRODUCT_TRANSACTION_EXCEPTION(ProductTransactionException.class, HttpStatus.UNPROCESSABLE_ENTITY),
     SUPPLIER_NOT_FOUND(SupplierNotFoundException.class, HttpStatus.NOT_FOUND),
-    SUPPLIER_IS_NULL(SupplierIsNullException.class, HttpStatus.UNPROCESSABLE_ENTITY);
+    SUPPLIER_IS_NULL(SupplierIsNullException.class, HttpStatus.UNPROCESSABLE_ENTITY),
+    SUPPLIER_TRANSACTION_EXCEPTION(SupplierTransactionException.class, HttpStatus.UNPROCESSABLE_ENTITY);
 
     private final Class<? extends Throwable> exceptionClass;
     private final HttpStatus httpStatus;
