@@ -11,6 +11,7 @@ public enum SupportedExceptions {
     CATEGORY_TRANSACTION_EXCEPTION(CategoryTransactionException.class, HttpStatus.UNPROCESSABLE_ENTITY),
     PRODUCT_NOT_FOUND(ProductNotFoundException.class, HttpStatus.NOT_FOUND),
     PRODUCT_IS_NULL(ProductIsNullException.class, HttpStatus.UNPROCESSABLE_ENTITY),
+    PRODUCT_TRANSACTION_EXCEPTION(ProductTransactionException.class, HttpStatus.UNPROCESSABLE_ENTITY),
     SUPPLIER_NOT_FOUND(SupplierNotFoundException.class, HttpStatus.NOT_FOUND),
     SUPPLIER_IS_NULL(SupplierIsNullException.class, HttpStatus.UNPROCESSABLE_ENTITY);
 

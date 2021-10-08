@@ -7,6 +7,7 @@ import com.itsx.alexis.service.exception.CategoryIsNullException;
 import com.itsx.alexis.service.exception.CategoryNotFoundException;
 import com.itsx.alexis.service.exception.ProductIsNullException;
 import com.itsx.alexis.service.exception.ProductNotFoundException;
+import com.itsx.alexis.service.exception.ProductTransactionException;
 import com.itsx.alexis.service.exception.SupplierIsNullException;
 import com.itsx.alexis.service.exception.SupplierNotFoundException;
 import io.vavr.control.Try;
@@ -39,7 +40,16 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @Override
     public List<Product> createAPullOfProducts(List<Product> products) {
-        return ((List<Product>) productRepo.saveAll(products));
+
+        Try<List<Product>> responseProducts = createAllProductsAndGetResponseProducts(products);
+
+        return responseProducts.get();
+    }
+
+    private Try<List<Product>> createAllProductsAndGetResponseProducts(List<Product> products) {
+        return Try.of( () -> (List<Product>) productRepo.saveAll(products) ).onFailure( (exception) -> {
+            throw ProductTransactionException.of();
+        });
     }
 
     @Override
