@@ -3,6 +3,7 @@ package com.itsx.alexis.service.impl;
 import com.itsx.alexis.entity.Category;
 import com.itsx.alexis.repository.CategoryRepository;
 import com.itsx.alexis.service.CategoryService;
+import com.itsx.alexis.service.exception.CategoryTransactionException;
 import com.itsx.alexis.service.exception.CategoryIsNullException;
 import com.itsx.alexis.service.exception.CategoryNotFoundException;
 import io.vavr.control.Try;
@@ -35,7 +36,17 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     @Override
     public List<Category> createAPullOfCategories(List<Category> categories) {
-        return ((List<Category>) categoryRepo.saveAll(categories));
+
+        Try<List<Category>> responseCategories = createAllCategoriesAndGetResponseCategories(categories);
+
+        return responseCategories.get();
+    }
+
+    private Try<List<Category>> createAllCategoriesAndGetResponseCategories(List<Category> categories) {
+        return Try.of( () -> (List<Category>) categoryRepo.saveAll(categories))
+                .onFailure( (exception) -> {
+                    throw CategoryTransactionException.of();
+                });
     }
 
     @Override

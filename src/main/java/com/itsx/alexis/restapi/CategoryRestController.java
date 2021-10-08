@@ -41,6 +41,7 @@ public class CategoryRestController {
 
     @ApiResponses({
             @ApiResponse(code = 201, message = "all categories was been created"),
+            @ApiResponse(code = 422, message = "some objects are invalid to complete the transaction")
     })
     @PostMapping(path = "/create/pull")
     public ResponseEntity<List<Category>> createAPullOfCategories(@RequestBody List<Category> categories) {
