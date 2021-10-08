@@ -5,6 +5,7 @@ import com.itsx.alexis.repository.SupplierRepository;
 import com.itsx.alexis.service.SupplierService;
 import com.itsx.alexis.service.exception.SupplierIsNullException;
 import com.itsx.alexis.service.exception.SupplierNotFoundException;
+import com.itsx.alexis.service.exception.SupplierTransactionException;
 import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,16 @@ public class SupplierServiceImpl implements SupplierService {
     @Transactional
     @Override
     public List<Supplier> createAPullOfSuppliers(List<Supplier> suppliers) {
-        return ((List<Supplier>) supplierRepo.saveAll(suppliers));
+
+        Try<List<Supplier>> responseSuppliers = createAllSuppliersAndGetResponseSuppliers(suppliers);
+
+        return responseSuppliers.get();
+    }
+
+    private Try<List<Supplier>> createAllSuppliersAndGetResponseSuppliers(List<Supplier> suppliers) {
+        return Try.of( () -> (List<Supplier>) supplierRepo.saveAll(suppliers) ).onFailure( (exception) -> {
+            throw SupplierTransactionException.of();
+        });
     }
 
     @Override
